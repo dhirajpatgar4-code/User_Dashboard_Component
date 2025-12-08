@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Signup from "./pages/Signup";
 
 ////////////////////////////////////////
 //      Components & Page Imports     //
@@ -36,6 +37,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+
         </Routes>
       </div>
     </Router>
