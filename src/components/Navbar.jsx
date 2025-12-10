@@ -28,18 +28,42 @@ const Navbar = () => {
 
   return (
     <>
-      <div>
-        <nav className="m-4">
+      {/* 👇 Added margin to avoid content hiding under fixed navbar */}
+      <div className="mt-20">
+
+        <nav className="m-4 fixed top-0 left-0 w-full bg-transparent z-50 ">
           <div className="flex justify-between">
             <img src={Logo} className="w-6 h-6" />
             <h1 className="text-sm mt-1 mx-3 text-purple-500 logo-typography montserrat sm:text-[16px] sm:text-purple-500">
               Safe Harbour
             </h1>
-            <div className="list-items relative hidden sm:block mx-auto sm:text-xl sm:border sm:border-purple-500 sm:font-normal sm:rounded-[50px] sm:p-2 sm:place-content-center hover:cursor-pointer">
-              <ul className="sm:flex font-normal text-purple-500">
-                <li className="mx-[30px]">Home</li>
-                <li className="mx-[30px]">About</li>
-                <li onClick={() => setDisplay(!display)} className="mx-[30px] flex">
+            <div className="list-items bg-white/90 relative hidden sm:block mx-auto sm:text-xl sm:border sm:border-purple-500 sm:font-normal sm:rounded-[50px] sm:p-2 sm:place-content-center hover:cursor-pointer">
+              <ul className="sm:flex font-normal  text-black">
+                <li
+                  className="
+    mx-[30px] hover:text-purple-900 relative
+    after:absolute after:left-0 after:bottom-[39px] after:h-[3px] after:w-0 after:bg-purple-500 after:transition-all after:duration-300 after:shadow-[0_0_10px_#a855f7]
+    before:absolute before:left-0 before:top-[39px] before:h-[3px] before:w-0 before:bg-purple-500 before:transition-all before:duration-300
+    before:shadow-[0_0_10px_#a855f7]
+    hover:after:w-full hover:before:w-full
+  "
+                >
+                  Home
+                </li>
+
+
+                <li className="mx-[30px] hover:text-purple-900 relative
+    after:absolute after:left-0 after:bottom-[39px] after:h-[3px] after:w-0 after:bg-purple-500 after:transition-all after:duration-300
+    after:shadow-[0_0_10px_#a855f7]
+    before:absolute before:left-0 before:top-[39px] before:h-[3px] before:w-0 before:bg-purple-500 before:transition-all before:duration-300
+    before:shadow-[0_0_10px_#a855f7]
+    hover:after:w-full hover:before:w-full">About</li>
+                <li onClick={() => setDisplay(!display)} className="mx-[30px] hover:text-purple-900 relative
+    after:absolute after:left-0 after:bottom-[39px] after:h-[3px] after:w-0 after:bg-purple-500 after:transition-all after:duration-300
+    after:shadow-[0_0_10px_#a855f7]
+    before:absolute before:left-0 before:top-[39px] before:h-[3px] before:w-0 before:bg-purple-500 before:transition-all before:duration-300
+    before:shadow-[0_0_10px_#a855f7]
+    hover:after:w-full hover:before:w-full">
                   Services
                   <button
                     onClick={() => setDisplay(!display)}
@@ -50,10 +74,9 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <div className="cta-button hidden sm:flex">
+            <div className="cta-button mr-10 hidden sm:flex">
               <ButtonCallToAction content="Get Started" />
             </div>
-            {/* HAMBURGER MENU */}
             <button onClick={() => setMobileDisplay(!mobileDisplay)}>
               <img
                 src={Menu}
@@ -63,9 +86,8 @@ const Navbar = () => {
             </button>
           </div>
         </nav>
-      </div>
-      {mobileDisplay && (
-        <>
+
+        {mobileDisplay && (
           <div ref={areaRef} data-aos="fade-down" className="mobile-menu-wrapper">
             <div className="bg-purple-500 w-full h-[200px] place-content-center rounded-b-full absolute -top-20">
               <div className="items">
@@ -77,15 +99,14 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        </>
-      )}
-      {display && (
-        <>
+        )}
+
+        {display && (
           <div ref={areaRef} className="dropdown absolute left-1/2">
             <Dropdown links={navbarItems} />
           </div>
-        </>
-      )}
+        )}
+      </div>
     </>
   );
 };
