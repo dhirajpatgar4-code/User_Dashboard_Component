@@ -159,7 +159,7 @@ export default function VerifyOTP() {
 
         {/* ICON */}
         <div className="flex justify-center mb-6 lg:mb-8">
-          <img src={Logo} alt="Safe Harbour logo" className="h-10 w-10 lg:h-16 lg:w-16" />
+          <img src={Logo} alt="Safe Harbour logo" className="h-12 w-12 lg:h-16 lg:w-16" />
         </div>
 
         {/* DESKTOP TITLE */}
@@ -211,17 +211,19 @@ export default function VerifyOTP() {
           )}
 
           {/* CONTINUE BUTTON */}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={submitting || otp.join("").length !== OTP_LENGTH}
               aria-disabled={submitting || otp.join("").length !== OTP_LENGTH}
-              className="group flex items-center gap-3 rounded-full bg-purple-500
-                px-10 py-3 text-lg font-semibold text-white hover:bg-purple-600 disabled:opacity-60"
+              className="group flex items-center justify-center gap-3 rounded-full
+                bg-gradient-to-r from-purple-500 to-[#B28AF9] h-12 lg:h-[56px] w-[200px] lg:w-[260px]
+                text-white font-medium text-base montserrat
+                hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed
+                transition-opacity shadow-lg"
             >
               Continue
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-white
-                text-purple-500 group-hover:translate-x-0.5 transition">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-purple-500">
                 <img src={RightArrow} alt="" className="h-4 w-4" />
               </span>
             </button>

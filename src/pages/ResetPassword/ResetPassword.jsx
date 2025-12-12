@@ -133,7 +133,7 @@ export default function ResetPassword() {
 
         {/* ICON */}
         <div className="flex justify-center mb-6 lg:mb-8">
-          <img src={Logo} alt="Safe Harbour logo" className="h-10 w-10 lg:h-16 lg:w-16" />
+          <img src={Logo} alt="Safe Harbour logo" className="h-12 w-12 lg:h-16 lg:w-16" />
         </div>
 
         {/* DESKTOP TITLE */}
@@ -159,13 +159,13 @@ export default function ResetPassword() {
               aria-required="true"
               aria-invalid={touched.password && !!passwordError}
               aria-describedby={passwordError ? "password-error" : undefined}
-              className={`w-full rounded-xl border px-4 py-3 text-lg
-                text-purple-600 outline-none transition-colors
+              className={`w-full h-12 lg:h-[56px] rounded-lg border px-5 text-base
+                placeholder-placeholder outline-none transition-colors
                 ${passwordError
                   ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                  : "border-purple-300 focus:ring-2 focus:ring-purple-200"
+                  : "border-purple-500/40 focus:ring-2 focus:ring-purple-200"
                 }
-                bg-white`}
+                text-purple-600 bg-white`}
             />
             {touched.password && formValues.password && (
               <div className="mt-2">
@@ -218,13 +218,13 @@ export default function ResetPassword() {
               aria-required="true"
               aria-invalid={touched.confirmPassword && !!confirmPasswordError}
               aria-describedby={confirmPasswordError ? "confirm-password-error" : undefined}
-              className={`w-full rounded-xl border px-4 py-3 text-lg
-                text-purple-600 outline-none transition-colors
+              className={`w-full h-12 lg:h-[56px] rounded-lg border px-5 text-base
+                placeholder-placeholder outline-none transition-colors
                 ${confirmPasswordError
                   ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                  : "border-purple-300 focus:ring-2 focus:ring-purple-200"
+                  : "border-purple-500/40 focus:ring-2 focus:ring-purple-200"
                 }
-                bg-white`}
+                text-purple-600 bg-white`}
             />
             {touched.confirmPassword && confirmPasswordError && (
               <p
@@ -250,17 +250,19 @@ export default function ResetPassword() {
           )}
 
           {/* CONTINUE BUTTON */}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={!isFormValid || submitting}
               aria-disabled={!isFormValid || submitting}
-              className="group flex items-center gap-3 rounded-full bg-purple-500
-                px-10 py-3 text-lg font-semibold text-white hover:bg-purple-600 disabled:opacity-60"
+              className="group flex items-center justify-center gap-3 rounded-full
+                bg-gradient-to-r from-purple-500 to-[#B28AF9] h-12 lg:h-[56px] w-[200px] lg:w-[260px]
+                text-white font-medium text-base montserrat
+                hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed
+                transition-opacity shadow-lg"
             >
               Continue
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-white
-                text-purple-500 group-hover:translate-x-0.5 transition">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-purple-500">
                 <img src={RightArrow} alt="" className="h-4 w-4" />
               </span>
             </button>

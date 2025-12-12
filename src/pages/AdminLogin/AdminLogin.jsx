@@ -63,6 +63,7 @@ export default function AdminLogin() {
         className="absolute left-1/2 top-[-140px] z-0 h-[280px] w-full max-w-[420px]
         -translate-x-1/2 rounded-b-[220px] bg-purple-500 lg:hidden"
       />
+      
 
       {/* LEFT SIDE */}
       <div className="relative z-10 w-full lg:w-1/2 px-6 sm:px-10 lg:px-16 py-6 flex flex-col">
