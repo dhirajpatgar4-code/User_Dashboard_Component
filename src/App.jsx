@@ -29,6 +29,9 @@ import { Home, AdminLogin } from "./pages";
 import { Navbar } from "./components";
 import { useEffect } from "react";
 import AboutUs from "./components/AboutUs";
+import AboutTheDoctor from "./components/AboutTheDoctor";
+
+
 
 
 const AppContent = () => {
@@ -44,6 +47,7 @@ const AppContent = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/thanks" element={<ThanksCard />} />
         <Route path="/about" element={<AboutUs/>}/>
+          <Route path="/about-doctor" element={<AboutTheDoctor />} />
 
       </Routes>
     </div>
