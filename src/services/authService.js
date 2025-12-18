@@ -1,7 +1,7 @@
 /**
  * Authentication service for password reset flow
- * Handles API calls for forgot password, OTP verification, and password reset 
- * this will be used to handle the API calls for the password reset flow 
+ * Handles API calls for forgot password, OTP verification, and password reset
+ * this will be used to handle the API calls for the password reset flow
  * the mock implementation will be used to handle the API calls for the password reset flow until the API is ready
  */
 
@@ -13,7 +13,7 @@
 export const forgotPassword = async (email) => {
   // TODO: Replace with actual API call
   // Example: return api.post('/auth/forgot-password', { email });
-  
+
   // Mock implementation
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -34,7 +34,7 @@ export const forgotPassword = async (email) => {
 export const verifyOTP = async (email, otp) => {
   // TODO: Replace with actual API call
   // Example: return api.post('/auth/verify-otp', { email, otp });
-  
+
   // Mock implementation - accepts any 4-digit code
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -63,7 +63,7 @@ export const verifyOTP = async (email, otp) => {
 export const resetPassword = async (token, password) => {
   // TODO: Replace with actual API call
   // Example: return api.post('/auth/reset-password', { token, password });
-  
+
   // Mock implementation
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -74,4 +74,3 @@ export const resetPassword = async (token, password) => {
     }, 1000);
   });
 };
-

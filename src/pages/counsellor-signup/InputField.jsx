@@ -1,9 +1,9 @@
 function InputField({
-  type = "text",
-  placeholder = "",
+  type = 'text',
+  placeholder = '',
   value,
   onChange,
-  className = "",
+  className = '',
   ...props
 }) {
   return (

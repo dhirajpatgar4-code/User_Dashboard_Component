@@ -1,7 +1,7 @@
 // apiClient.js
-import axios from "axios";
+import axios from 'axios';
 // import apiPublic from "./apiPublic";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 // import { getDecryptedToken } from "../utils/cryptoUtil";
 
 axios.defaults.withCredentials = true;
@@ -16,16 +16,16 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       // Token expired or invalid
-      toast.info("Session expired, logging out...");
+      toast.info('Session expired, logging out...');
       // Clear local user state
-      localStorage.removeItem("authenticated-data-storage");
+      localStorage.removeItem('authenticated-data-storage');
       // Redirect to login
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

@@ -18,50 +18,50 @@ import {
   Routes,
   Route,
   useLocation,
-} from "react-router-dom";
-import "./App.css";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import Signup from "./pages/Signup";
-import ThanksCard from "./pages/ThanksCard";
-
+} from 'react-router-dom';
+import './App.css';
+import AOS from 'aos';
+import { useEffect } from 'react';
+import 'aos/dist/aos.css';
 
 ////////////////////////////////////////
 //      Components & Page Imports     //
 ////////////////////////////////////////
 
-import { Home, AdminLogin, ForgotPassword, VerifyOTP, ResetPassword } from "./pages";
-import { Navbar } from "./components";
-import { useEffect } from "react";
-import AboutUs from "./components/AboutUs";
-import AboutTheDoctor from "./components/AboutTheDoctor";
-
-
-
-import CounsellorSignup from "./pages/counserlor-signup/CounsellorSignup";
+import {
+  Home,
+  AdminLogin,
+  ForgotPassword,
+  VerifyOTP,
+  ResetPassword,
+  Signup,
+  ThanksCard,
+  CounsellorSignup,
+} from './pages';
+import { Footer, Navbar } from './components';
 
 const AppContent = () => {
   const location = useLocation();
   const hideNavbar =
-    location.pathname === "/admin/login" ||
-    location.pathname === "/signup" ||
-    location.pathname === "/counsellor/signup";
+    location.pathname === '/admin/login' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/counsellor/signup';
 
   return (
     <div>
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/thanks" element={<ThanksCard />} />
-        <Route path="/about" element={<AboutUs/>}/>
-        <Route path="/about-doctor" element={<AboutTheDoctor />} />
-        <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/verify-otp" element={<VerifyOTP />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/counsellor/signup" element={<CounsellorSignup />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/admin/login' element={<AdminLogin />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/forgot' element={<ForgotPassword />} />
+        <Route path='/verify-otp' element={<VerifyOTP />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/counsellor/signup' element={<CounsellorSignup />} />
       </Routes>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
