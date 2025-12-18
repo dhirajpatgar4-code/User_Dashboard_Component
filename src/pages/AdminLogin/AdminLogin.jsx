@@ -56,48 +56,41 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="relative h-screen bg-white flex flex-col lg:flex-row overflow-hidden">
+    <div className="relative min-h-screen bg-white flex flex-col lg:flex-row overflow-hidden">
 
-      {/* MOBILE PURPLE ARC */}
-      <div
-        className="absolute left-1/2 top-[-140px] z-0 h-[280px] w-full max-w-[420px]
-        -translate-x-1/2 rounded-b-[220px] bg-purple-500 lg:hidden"
-      />
+      {/* MOBILE PURPLE ARC (FIXED) */}
+      <div className="lg:hidden w-full bg-[#8E76F2] h-[220px] rounded-b-[200px] flex flex-col justify-center items-center">
+        <h1 className="montserrat text-center text-3xl font-semibold text-white px-6">
+          Welcome
+        </h1>
+      </div>
 
-      {/* LEFT SIDE */}
-      <div className="relative z-10 w-full lg:w-1/2 px-6 sm:px-10 lg:px-16 py-6 flex flex-col">
+      <div className="relative z-10 w-full lg:w-1/2 px-6 sm:px-10 lg:px-16 pt-6 lg:pt-6 pb-12 lg:pb-6 flex flex-col">
 
         {/* DESKTOP BRAND */}
-        <div className="hidden lg:flex items-center gap-2 text-base font-semibold text-purple-500 mb-8">
+        <div className="hidden lg:flex items-center gap-2 text-base font-semibold text-[#8E76F2] mb-8">
           <span className="montserrat">Safe Harbour</span>
         </div>
 
-        {/* MOBILE TITLE IN PURPLE ARC */}
-        <div className="lg:hidden flex flex-col items-center absolute top-[45px] left-1/2 -translate-x-1/2 z-20 w-full">
-          <h1 className="montserrat text-center text-4xl font-semibold text-white">
-            Welcome
-          </h1>
-        </div>
-
-        {/* CENTER CONTENT (FORM AREA) */}
-        <div className="flex flex-1 items-center justify-center w-full lg:ml-[27%] pt-[140px] lg:pt-0">
+        {/* CENTER CONTENT */}
+        <div className="flex flex-1 items-center justify-center w-full lg:ml-[27%]">
           <div className="w-full max-w-[563px] flex flex-col items-center">
-            
+
             {/* MOBILE ICON BELOW ARC */}
-            <div className="lg:hidden flex justify-center mb-4">
-              <img src={Logo} alt="brand icon" className="h-10 w-10" />
+            <div className="lg:hidden flex justify-center mt-10 mb-6">
+              <img src={Logo} alt="brand icon" className="h-12 w-12" />
             </div>
 
-            {/* DESKTOP TITLE + ICON */}
+            {/* DESKTOP TITLE */}
             <div className="hidden lg:flex flex-col items-center gap-3 mb-6">
               <img src={Logo} className="h-10 w-10" />
-              <h1 className="montserrat text-[52px] font-semibold text-purple-500">
+              <h1 className="montserrat text-[52px] font-semibold text-[#8E76F2]">
                 Welcome
               </h1>
             </div>
 
             {/* FORM */}
-            <form className="w-full space-y-4" onSubmit={handleSubmit} noValidate>
+            <form className="w-full max-w-[400px] lg:max-w-[500px] space-y-6" onSubmit={handleSubmit} noValidate>
 
               {/* EMAIL FIELD */}
               <div>
@@ -109,11 +102,14 @@ export default function AdminLogin() {
                   value={formValues.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="w-full rounded-xl border border-purple-300 px-4 py-3 text-lg
-                  text-purple-600 outline-none focus:ring-2 focus:ring-purple-200"
+                  className={`w-full h-12 lg:h-[56px] rounded-lg border px-5 text-base outline-none transition-colors
+                    ${touched.email && emailError
+                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                      : "border-[#8E76F240] focus:ring-2 focus:ring-[#8E76F2]/20"
+                    } text-[#2E2E2E] bg-white placeholder-[#B9A8F6]`}
                 />
                 {touched.email && emailError && (
-                  <p className="text-sm text-red-500 mt-1">{emailError}</p>
+                  <p className="text-sm text-red-500 mt-2">{emailError}</p>
                 )}
               </div>
 
@@ -127,15 +123,18 @@ export default function AdminLogin() {
                   value={formValues.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="w-full rounded-xl border border-purple-300 px-4 py-3 text-lg
-                  text-purple-600 outline-none focus:ring-2 focus:ring-purple-200"
+                  className={`w-full h-12 lg:h-[56px] rounded-lg border px-5 text-base outline-none transition-colors
+                    ${touched.password && passwordError
+                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                      : "border-[#8E76F240] focus:ring-2 focus:ring-[#8E76F2]/20"
+                    } text-[#2E2E2E] bg-white placeholder-[#B9A8F6]`}
                 />
 
-                <div className="flex justify-between mt-1">
+                <div className="flex justify-between mt-2">
                   {touched.password && passwordError && (
                     <p className="text-sm text-red-500">{passwordError}</p>
                   )}
-                  <a className="text-sm text-neutral-600 hover:text-purple-500" href="#">
+                  <a className="text-sm text-[#8A8A8A] hover:text-[#8E76F2]" href="/forgot">
                     Forgot Password?
                   </a>
                 </div>
@@ -155,31 +154,33 @@ export default function AdminLogin() {
               </div>
 
               {/* BUTTON */}
-              <div className="flex justify-center mt-4">
+              <div className="flex justify-center">
                 <button
                   type="submit"
                   disabled={!isFormValid || submitting}
-                  className="group flex items-center gap-3 rounded-full bg-purple-500
-                  px-10 py-3 text-lg font-semibold text-white hover:bg-purple-600 disabled:opacity-60"
+                  className="group flex items-center justify-center gap-3 rounded-full
+                  bg-gradient-to-r from-[#8E76F2] to-[#B28AF9] h-12 lg:h-[56px] w-[200px] lg:w-[260px]
+                  text-white font-medium text-base montserrat
+                  hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed
+                  transition-opacity shadow-lg"
                 >
                   Continue
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white
-                    text-purple-500 group-hover:translate-x-0.5 transition">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-[#8E76F2]">
                     <img src={RightArrow} alt="" className="h-4 w-4" />
                   </span>
                 </button>
               </div>
 
               {/* TERMS */}
-              <p className="text-center text-xs text-neutral-500 mt-4">
+              <p className="text-center text-xs text-[#8A8A8A] mt-4">
                 By continuing, you agree to our{" "}
-                <a className="underline hover:text-purple-500">Terms</a> and{" "}
-                <a className="underline hover:text-purple-500">Privacy Policy</a>
+                <a className="underline hover:text-[#8E76F2]">Terms</a> and{" "}
+                <a className="underline hover:text-[#8E76F2]">Privacy Policy</a>
               </p>
 
-              <p className="text-center text-xs text-neutral-600 mt-1">
+              <p className="text-center text-xs text-[#8A8A8A] mt-1">
                 Don’t Have an account?{" "}
-                <a className="underline hover:text-purple-500">Signup</a>
+                <a className="underline hover:text-[#8E76F2]">Signup</a>
               </p>
             </form>
           </div>
