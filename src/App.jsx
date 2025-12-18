@@ -23,6 +23,8 @@ import "./App.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Signup from "./pages/Signup";
+import ThanksCard from "./pages/ThanksCard";
+
 
 ////////////////////////////////////////
 //      Components & Page Imports     //
@@ -47,6 +49,7 @@ const AppContent = () => {
         <Route path="/" element={<Home />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/thanks" element={<ThanksCard />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/reset-password" element={<ResetPassword />} />
