@@ -1,29 +1,29 @@
 // HeroSection.jsx
-import ButtonCallToAction from "./ui/button/ButtonCallToAction";
-import HeroBg from "../assets/Rectangle 14.png";
-import HeroIllustration from "../assets/Hero_Illustration.png";
-import CallingUI from "../assets/Calling.png";
+import ButtonCallToAction from './ui/button/ButtonCallToAction';
+import HeroBg from '../assets/Rectangle 14.png';
+import HeroIllustration from '../assets/Hero_Illustration.png';
+import CallingUI from '../assets/Calling.png';
 
 export default function HeroSection() {
   return (
-    <section className="w-full flex justify-center bg-white pb-16">
-      <div className="w-full max-w-[1520px] px-4">
+    <section className='w-full flex justify-center bg-white pb-16 md:mt-10'>
+      <div id='hero-section' data-aos='fade-down' className='w-full max-w-[1520px] px-4'>
         <div
-          className="
+          className='
             relative
             w-full
             lg:h-[744px]
             flex
             flex-col
             lg:flex-row
-            overflow-hidden
+            overflow-visible 
+            lg:overflow-hidden
             rounded-[24px]
-          "
+          '
         >
-
           {/* LEFT SECTION */}
           <div
-            className="
+            className='
               relative
               w-full
               lg:w-[calc(1520px-24px-700px)]
@@ -39,30 +39,29 @@ export default function HeroSection() {
               lg:py-0
               rounded-r-[24px]
               rounded-l-[24px]
-            "
+            '
           >
             {/* CENTERED CONTENT */}
-            <div className="w-full max-w-[560px] mx-auto flex flex-col items-center lg:items-start">
-
-              <h1 className="montserrat text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] font-semibold text-black text-center lg:text-left">
+            <div className='w-full max-w-[560px] mx-auto flex flex-col items-center lg:items-start'>
+              <h1 className='montserrat text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] font-semibold text-black text-center lg:text-left'>
                 Medical Services
               </h1>
 
-              <h2 className="merriweather italic text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] text-[#8E76F2] text-center lg:text-left">
+              <h2 className='merriweather italic text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] text-[#8E76F2] text-center lg:text-left'>
                 Personalized
               </h2>
 
-              <h1 className="montserrat text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] font-semibold text-black text-center lg:text-left">
+              <h1 className='montserrat text-[36px] sm:text-[44px] lg:text-[56px] leading-tight lg:leading-[72px] font-semibold text-black text-center lg:text-left'>
                 for Better Health
               </h1>
 
               {/* CTA BUTTONS */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-8 lg:mt-10">
-                <ButtonCallToAction content="Get Started" />
+              <div className='flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-8 lg:mt-10'>
+                <ButtonCallToAction content='Get Started' />
 
                 {/* EXPLORE BUTTON */}
                 <button
-                  className="
+                  className='
                     inline-flex
                     items-center
                     justify-center
@@ -78,7 +77,7 @@ export default function HeroSection() {
                     hover:bg-[#8473E8]
                     hover:text-white
                     transition
-                  "
+                  '
                 >
                   Explore Services
                 </button>
@@ -87,13 +86,13 @@ export default function HeroSection() {
           </div>
 
           {/* GAP */}
-          <div className="hidden lg:block w-[24px] h-full bg-white relative z-10" />
+          <div className='hidden lg:block w-[24px] h-full bg-white relative z-10' />
 
           {/* CALLING UI — BETWEEN LEFT & RIGHT */}
           <img
             src={CallingUI}
-            alt="Calling UI"
-            className="
+            alt='Calling UI'
+            className='
               hidden
               lg:block
               absolute
@@ -102,12 +101,12 @@ export default function HeroSection() {
               -translate-x-1/2
               z-30
               pointer-events-none
-            "
+            '
           />
 
           {/* RIGHT SECTION */}
           <div
-            className="
+            className='
               hidden
               lg:block
               relative
@@ -118,18 +117,18 @@ export default function HeroSection() {
               border-white
               rounded-r-[24px]
               rounded-l-[24px]
-            "
+            '
           >
             <img
               src={HeroBg}
-              alt="Hero background"
-              className="w-full h-full object-cover"
+              alt='Hero background'
+              className='w-full h-full object-cover'
             />
 
             <img
               src={HeroIllustration}
-              alt="Doctor illustration"
-              className="
+              alt='Doctor illustration'
+              className='
                 absolute
                 top-[90px]
                 left-[25px]
@@ -137,7 +136,7 @@ export default function HeroSection() {
                 h-[654px]
                 object-contain
                 z-10
-              "
+              '
             />
           </div>
         </div>

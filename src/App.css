@@ -1,19 +1,13 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 
 .montserrat {
-  font-family: 'Montserrat', 'sans-serif';
-  font-optical-sizing: auto;
+  font-family: 'Montserrat', sans-serif;
 }
-
 .merriweather {
   font-family: 'Merriweather', serif;
 }
-
 .inter {
-  font-family: 'Inter', 'sans-serif';
+  font-family: 'Inter', sans-serif;
 }
 
 @theme {
@@ -34,7 +28,6 @@
   line-height: normal;
 }
 
-/* body {
-  background: rgb(51, 51, 51);
-  color: white;
-} */
+.mobile-menu-wrapper{
+  z-index: 1000;
+}
