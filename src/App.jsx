@@ -44,17 +44,21 @@ import { Footer, Navbar, DashboardNavBar } from './components';
 import { ToastContainer } from 'react-toastify';
 import { useAuthStore } from './store/auth-store.js';
 
-
 const AppContent = () => {
   const location = useLocation();
   const hideNavbar =
     location.pathname === '/admin/login' ||
     location.pathname === '/signup' ||
-    location.pathname === '/counsellor/signup'||
-    location.pathname === '/dashboard' ;
+    location.pathname === '/counsellor/signup' ||
+    location.pathname === '/dashboard';
 
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.authenticated);
   const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
+
+  //=== [DEBUG USE-EFFECT LOG] ===//
+  useEffect(() => {
+    console.log('[AUTH STATE]', isAuthenticated);
+  }, []);
 
   return (
     <div>
@@ -69,7 +73,7 @@ const AppContent = () => {
         toastClassName={'toast-uppercase'}
       />
       {/* {!hideNavbar && <Navbar /> */}
-      {isAuthenticated && toggleAuthState ? <DashboardNavBar /> : (!hideNavbar && <Navbar />)}
+      {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/admin/login' element={<AdminLogin />} />
@@ -81,7 +85,6 @@ const AppContent = () => {
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<DashboardNavBar />} />
-
       </Routes>
       <div>
         <Footer />

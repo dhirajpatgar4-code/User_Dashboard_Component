@@ -13,7 +13,7 @@ export default function Login() {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [touched, setTouched] = useState({ email: false, password: false });
   const [submitting, setSubmitting] = useState(false);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.authenticated);
   const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
 
   // =========================
