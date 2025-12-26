@@ -28,10 +28,21 @@ import 'aos/dist/aos.css';
 //      Components & Page Imports     //
 ////////////////////////////////////////
 
-import { Home, AdminLogin } from './pages';
-import { Navbar } from './components';
+import {
+  Home,
+  AdminLogin,
+  Signup,
+  ForgotPassword,
+  VerifyOTP,
+  ResetPasswordOTP,
+  ResetPassword,
+  Login,
+} from './pages';
+import { DashboardNavBar, Navbar } from './components';
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
 import { useAuthStore } from './store/auth-store';
+import { ToastContainer } from 'react-toastify';
+import { Footer } from 'react-day-picker';
 
 const AppContent = () => {
   const location = useLocation();
