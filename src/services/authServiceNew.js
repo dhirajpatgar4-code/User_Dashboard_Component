@@ -53,7 +53,7 @@ export const adminLogin = asyncHandler(async ({ email, password }) => {
 });
 
 export const sendEmailVerificationOtp = asyncHandler(async (email) => {
-  const res = await api.post(`/api/user/email-verification-otp/${email}`);
+  const res = await api.post(`/api/user/otp-for-password/${email}`);
   return res;
 });
 

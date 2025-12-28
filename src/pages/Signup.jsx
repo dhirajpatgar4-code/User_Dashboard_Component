@@ -184,12 +184,12 @@ const Signup = () => {
 
       toast.success('Welcome! Your account is ready.');
       await sendEmailVerificationOtp(form.email);
-      setTimeout(() => navigate(`/verify-otp/${form.email}`), 2000);
+      navigate(`/verify-otp/${form.email}`);
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast.error(error.issues[0].message);
       } else {
-        toast.error(error.response.data.msg || 'Something went wrong');
+        toast.error(error.response.data.message || 'Something went wrong');
       }
     } finally {
       setLoading(false);
