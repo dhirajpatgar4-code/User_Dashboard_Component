@@ -3,7 +3,7 @@ import { Menu, X, Search, ChevronDown } from 'lucide-react';
 
 function DashboardNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Counsellors');
+  const [activeTab, setActiveTab] = useState('Dashboard');
   const [opensearch, setIsopensearch] = useState(false);
 
   return (

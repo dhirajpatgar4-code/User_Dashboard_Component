@@ -4,7 +4,7 @@ import RightArrow from '../assets/RightArrow.svg';
 import LoginHero from '../assets/login 1.png';
 import Logo from '../assets/Logo.png';
 import { userLogin } from '../services/authServiceNew';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth-store';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,22 +55,22 @@ export default function Login() {
     if (!isFormValid || submitting) return;
 
     setSubmitting(true);
-    const loadingToast = toast.loading('Signing you in...');
+    // const loadingToast = toast.loading('Signing you in...');
 
     try {
       const res = await userLogin(formValues.email.trim(), formValues.password);
       console.log('🚀 ~ handleSubmit ~ res:', res);
 
-      toast.dismiss(loadingToast);
+      // toast.dismiss(loadingToast);
 
-      if (res?.message === 'Login successful') {
-        toast.success('Login successful');
+      if (res?.statusCode === 200) {
+        toast.success('Welcome back!');
         toggleAuthState(true);
         navigate('/');
         window.scrollTo(0, 0);
       }
     } catch (error) {
-      toast.dismiss(loadingToast);
+      // toast.dismiss(loadingToast);
 
       const status = error?.response?.status;
       const message =
@@ -103,6 +103,13 @@ export default function Login() {
       if (navbar) navbar.style.display = '';
     };
   }, []);
+
+  //==== || Navigate if already logged in || ==== //
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className='relative min-h-screen bg-white flex flex-col lg:flex-row overflow-hidden'>

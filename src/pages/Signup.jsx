@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { signupUser } from '../services/authServiceNew';
 import { Link, useNavigate } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
+import { useAuthStore } from '../store/auth-store';
 
 /* =======================
    ZOD VALIDATION
@@ -123,6 +125,13 @@ const CustomDropdown = ({ options, placeholder, value, onChange }) => {
    SIGNUP COMPONENT
 ======================= */
 const Signup = () => {
+  const isAuthenticated = useAuthStore((state) => state.authenticated);
+  useTitle('Join');
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  });
   const [showCalendar, setShowCalendar] = useState(false);
   const [loading, setLoading] = useState(false);
 
