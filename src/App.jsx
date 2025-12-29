@@ -57,15 +57,19 @@ const AppContent = () => {
   const isAuthenticated = useAuthStore((state) => state.authenticated);
   const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
   const setProfilePic = useAuthStore((state) => state.setProfilePic);
-  
+
   //=== [Check if  Authenticated] ===//
   const checkIfAuthenticated = async () => {
     const res = await checkAuth();
-    console.log('🚀 ~ checkIfAuthenticated ~ res:', res);
+
     if (res.statusCode === 200) {
-      toggleAuthState(true);
       setProfilePic(res?.data?.profilePic);
+      toggleAuthState((prev) => {
+        if (prev === true) return prev;
+        return true;
+      });
     }
+
     return res;
   };
 
