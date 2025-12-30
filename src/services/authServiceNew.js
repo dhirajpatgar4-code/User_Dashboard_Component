@@ -27,7 +27,7 @@ export const checkAuth = asyncHandler(async () => {
 });
 
 export const logout = asyncHandler(async () => {
-  const res = await api.get('/api/logout');
+  const res = await api.post('/logout');
   if (res.status === 200) {
     window.location.href = '/';
     localStorage.clear();
