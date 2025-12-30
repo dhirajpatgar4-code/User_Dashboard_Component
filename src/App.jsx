@@ -66,7 +66,7 @@ const AppContent = () => {
     // check if authenticated
     const checkAuth = async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/current-user`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/current-user`,
       );
       const userData = res?.data?.data;
       setFullName(userData?.fullname);

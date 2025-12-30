@@ -21,7 +21,7 @@ export const signupUser = asyncHandler(
 );
 
 export const checkAuth = asyncHandler(async () => {
-  const res = await api.get('/api/current-user');
+  const res = await api.get('/api/user/current-user');
   console.log('🚀 ~ res:', res.data);
   return res.data;
 });
