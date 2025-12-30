@@ -66,7 +66,7 @@ const AppContent = () => {
     // check if authenticated
     const checkAuth = async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/current-user`,
+        `${import.meta.env.VITE_BACKEND_URL}/current-user`,
       );
       const userData = res?.data?.data;
       setFullName(userData?.fullname);
@@ -80,7 +80,7 @@ const AppContent = () => {
     // check google auth
     const checkEmailAuth = async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/info`,
+        `${import.meta.env.VITE_BACKEND_URL}/info`,
       );
       console.log('🚀 ~ checkEmailAuth ~ res:', res);
     };
