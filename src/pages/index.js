@@ -12,4 +12,6 @@ export { default as ThanksCard } from './ThanksCard';
 export { default as CounsellorSignup } from './counsellor-signup/CounsellorSignup';
 export { default as ResetPasswordOTP } from './ResetPasswordOTP';
 export { default as Login } from './Login';
+export { default as Services } from './Services';
 export { default as Logout } from './Logout';
+
