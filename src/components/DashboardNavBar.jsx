@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuthStore } from '../store/auth-store';
 import { logout } from '../services/authServiceNew';
+import { Link } from 'react-router-dom';
 
 // const [cookies] = useCookies(["authToken"]);// usecookie
 
@@ -61,7 +62,7 @@ function DashboardNavBar() {
                   top: '4px',
                 }}
               />
-
+               <Link to='/home' >
               <button
                 onClick={() => setActiveTab('Dashboard')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -72,6 +73,8 @@ function DashboardNavBar() {
               >
                 Dashboard
               </button>
+              </Link>
+              <Link to='/chat' >
               <button
                 onClick={() => setActiveTab('Chats')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -82,6 +85,8 @@ function DashboardNavBar() {
               >
                 Chats
               </button>
+              </Link>
+              <Link to='/counsellor' >
               <button
                 onClick={() => setActiveTab('Counsellors')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -92,6 +97,8 @@ function DashboardNavBar() {
               >
                 Counsellors
               </button>
+              </Link>
+              <Link to='/services' >
               <button
                 onClick={() => setActiveTab('Services')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -102,6 +109,7 @@ function DashboardNavBar() {
               >
                 Services
               </button>
+              </Link>
             </div>
 
             {/* Search Bar - Hidden on Mobile */}
@@ -330,6 +338,7 @@ function DashboardNavBar() {
           >
             {/* Menu Items in Grid Layout */}
             <div className='grid grid-cols-2 gap-x-14 gap-y-5  px-24 py-8 max-w-md mx-auto'>
+              <Link to='/home'>
               <button
                 onClick={() => {
                   setActiveTab('Dashboard');
@@ -343,6 +352,8 @@ function DashboardNavBar() {
               >
                 Dashboard
               </button>
+              </Link>
+              <Link to='/counsellor'>
               <button
                 onClick={() => {
                   setActiveTab('Chats');
@@ -356,6 +367,8 @@ function DashboardNavBar() {
               >
                 Chat
               </button>
+              </Link>
+              <Link to='/counsellor' >
               <button
                 onClick={() => {
                   setActiveTab('Counsellors');
@@ -369,6 +382,8 @@ function DashboardNavBar() {
               >
                 Counsellors
               </button>
+              </Link>
+              <Link to='/services' >
               <button
                 onClick={() => {
                   setActiveTab('Services');
@@ -382,6 +397,7 @@ function DashboardNavBar() {
               >
                 Services
               </button>
+              </Link>
             </div>
           </div>
         </>

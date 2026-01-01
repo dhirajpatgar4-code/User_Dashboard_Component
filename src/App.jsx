@@ -47,6 +47,7 @@ import { useAuthStore } from './store/auth-store';
 import { ToastContainer } from 'react-toastify';
 import { Footer } from 'react-day-picker';
 import axios from 'axios';
+import CounsellorsGrid from './pages/Counsellor';
 
 const AppContent = () => {
   const location = useLocation();
@@ -123,12 +124,9 @@ const AppContent = () => {
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
         <Route path='/login' element={<Login />} />
-
         <Route path='/services' element={<Services />} />
-
         <Route path='/logout' element={<Logout />} />
-
-        <Route path='/dashboard' element={<DashboardNavBar />} />
+        <Route path="counsellor" element={< CounsellorsGrid />} />
       </Routes>
       <div>
         <Footer />
