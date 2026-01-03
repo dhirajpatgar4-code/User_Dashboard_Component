@@ -8,7 +8,5 @@ export { default as Dropdown } from './ui/navbar/Dropdown';
 export { default as DropdownLarge } from './ui/navbar/DropdownLarge';
 export { default as Footer } from './ui/footer/Footer';
 export { default as AboutUs } from './AboutUs';
-export { default as AboutTheDoctor } from './AboutTheDoctor';
 export { default as DoctorUI } from './ui/cards/DoctorUI';
-export { default as DashboardNavBar } from "./DashboardNavBar"
-export { default as CounsellorPricingSection } from './CounsellorPricingSection';
+export { default as DashboardNavBar } from './DashboardNavBar';

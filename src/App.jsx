@@ -43,6 +43,7 @@ import {
 import { Footer, Navbar, DashboardNavBar } from './components';
 import { ToastContainer } from 'react-toastify';
 import { useAuthStore } from './store/auth-store.js';
+import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx';
 
 const AppContent = () => {
   const location = useLocation();
@@ -58,7 +59,7 @@ const AppContent = () => {
   //=== [DEBUG USE-EFFECT LOG] ===//
   useEffect(() => {
     console.log('[AUTH STATE]', isAuthenticated);
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div>
@@ -73,7 +74,7 @@ const AppContent = () => {
         toastClassName={'toast-uppercase'}
       />
       {/* {!hideNavbar && <Navbar /> */}
-      {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />}
+      {/* {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />} */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/admin/login' element={<AdminLogin />} />
@@ -83,12 +84,12 @@ const AppContent = () => {
         <Route path='/reset-password/:emailId' element={<ResetPasswordOTP />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
+        <Route path='/counsellor/profile' element={<CounsellorProfile />} />
+
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<DashboardNavBar />} />
       </Routes>
-      <div>
-        <Footer />
-      </div>
+      <div>{/* <Footer /> */}</div>
     </div>
   );
 };
