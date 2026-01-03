@@ -3,6 +3,7 @@ import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuthStore } from '../store/auth-store';
 import { logout } from '../services/authServiceNew';
 import { Link } from 'react-router-dom';
+import Logo from '../../public/Logo.png';
 
 // const [cookies] = useCookies(["authToken"]);// usecookie
 
@@ -32,11 +33,7 @@ function DashboardNavBar() {
             {/* Logo */}
             <div className='flex ml-14 items-center gap-2 sm:gap-3'>
               <div className='w-8 h-8 sm:w-12 sm:h-12 sm:-ml-14 sm:mr-4 rounded-xl flex items-center justify-center'>
-                <img
-                  className='w-6 h-6 sm:size-10'
-                  src='public\logo.png'
-                  alt='error'
-                />
+                <img className='w-6 h-6 sm:size-10' src={Logo} alt='error' />
               </div>
               <span className='text-[#8473E8] font-semibold sm:-ml-4 text-base sm:text-xl hidden sm:block'>
                 Safe Harbour
@@ -62,53 +59,53 @@ function DashboardNavBar() {
                   top: '4px',
                 }}
               />
-               <Link to='/home' >
-              <button
-                onClick={() => setActiveTab('Dashboard')}
-                className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                  activeTab === 'Dashboard'
-                    ? 'text-white'
-                    : 'text-gray-700 hover:text-purple-600'
-                }`}
-              >
-                Dashboard
-              </button>
+              <Link to='/home'>
+                <button
+                  onClick={() => setActiveTab('Dashboard')}
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
+                    activeTab === 'Dashboard'
+                      ? 'text-white'
+                      : 'text-gray-700 hover:text-purple-600'
+                  }`}
+                >
+                  Dashboard
+                </button>
               </Link>
-              <Link to='/chat' >
-              <button
-                onClick={() => setActiveTab('Chats')}
-                className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                  activeTab === 'Chats'
-                    ? 'text-white'
-                    : 'text-gray-700 hover:text-purple-600'
-                }`}
-              >
-                Chats
-              </button>
+              <Link to='/chat'>
+                <button
+                  onClick={() => setActiveTab('Chats')}
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
+                    activeTab === 'Chats'
+                      ? 'text-white'
+                      : 'text-gray-700 hover:text-purple-600'
+                  }`}
+                >
+                  Chats
+                </button>
               </Link>
-              <Link to='/counsellor' >
-              <button
-                onClick={() => setActiveTab('Counsellors')}
-                className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                  activeTab === 'Counsellors'
-                    ? 'text-white'
-                    : 'text-gray-700 hover:text-purple-600'
-                }`}
-              >
-                Counsellors
-              </button>
+              <Link to='/counsellor'>
+                <button
+                  onClick={() => setActiveTab('Counsellors')}
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
+                    activeTab === 'Counsellors'
+                      ? 'text-white'
+                      : 'text-gray-700 hover:text-purple-600'
+                  }`}
+                >
+                  Counsellors
+                </button>
               </Link>
-              <Link to='/services' >
-              <button
-                onClick={() => setActiveTab('Services')}
-                className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                  activeTab === 'Services'
-                    ? 'text-white'
-                    : 'text-gray-700 hover:text-purple-600'
-                }`}
-              >
-                Services
-              </button>
+              <Link to='/services'>
+                <button
+                  onClick={() => setActiveTab('Services')}
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
+                    activeTab === 'Services'
+                      ? 'text-white'
+                      : 'text-gray-700 hover:text-purple-600'
+                  }`}
+                >
+                  Services
+                </button>
               </Link>
             </div>
 
@@ -315,7 +312,9 @@ function DashboardNavBar() {
                     d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
                   />
                 </svg>
-                <span onClick={() => logout()} className='text-sm sm:text-base'>Logout</span>
+                <span onClick={() => logout()} className='text-sm sm:text-base'>
+                  Logout
+                </span>
               </button>
             </div>
           </div>
@@ -339,64 +338,64 @@ function DashboardNavBar() {
             {/* Menu Items in Grid Layout */}
             <div className='grid grid-cols-2 gap-x-14 gap-y-5  px-24 py-8 max-w-md mx-auto'>
               <Link to='/home'>
-              <button
-                onClick={() => {
-                  setActiveTab('Dashboard');
-                  setIsMenuOpen(false);
-                }}
-                className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                  activeTab === 'Dashboard'
-                    ? 'font-bold border-b-4 border-white pb-1'
-                    : 'font-normal'
-                }`}
-              >
-                Dashboard
-              </button>
+                <button
+                  onClick={() => {
+                    setActiveTab('Dashboard');
+                    setIsMenuOpen(false);
+                  }}
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
+                    activeTab === 'Dashboard'
+                      ? 'font-bold border-b-4 border-white pb-1'
+                      : 'font-normal'
+                  }`}
+                >
+                  Dashboard
+                </button>
               </Link>
               <Link to='/counsellor'>
-              <button
-                onClick={() => {
-                  setActiveTab('Chats');
-                  setIsMenuOpen(false);
-                }}
-                className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                  activeTab === 'Chats'
-                    ? 'font-bold border-b-4 border-white pb-1'
-                    : 'font-normal'
-                }`}
-              >
-                Chat
-              </button>
+                <button
+                  onClick={() => {
+                    setActiveTab('Chats');
+                    setIsMenuOpen(false);
+                  }}
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
+                    activeTab === 'Chats'
+                      ? 'font-bold border-b-4 border-white pb-1'
+                      : 'font-normal'
+                  }`}
+                >
+                  Chat
+                </button>
               </Link>
-              <Link to='/counsellor' >
-              <button
-                onClick={() => {
-                  setActiveTab('Counsellors');
-                  setIsMenuOpen(false);
-                }}
-                className={`text-white text-lg sm:text-xl text-left ${
-                  activeTab === 'Counsellors'
-                    ? 'font-bold border-b-4 border-white pb-1'
-                    : 'font-normal'
-                }`}
-              >
-                Counsellors
-              </button>
+              <Link to='/counsellor'>
+                <button
+                  onClick={() => {
+                    setActiveTab('Counsellors');
+                    setIsMenuOpen(false);
+                  }}
+                  className={`text-white text-lg sm:text-xl text-left ${
+                    activeTab === 'Counsellors'
+                      ? 'font-bold border-b-4 border-white pb-1'
+                      : 'font-normal'
+                  }`}
+                >
+                  Counsellors
+                </button>
               </Link>
-              <Link to='/services' >
-              <button
-                onClick={() => {
-                  setActiveTab('Services');
-                  setIsMenuOpen(false);
-                }}
-                className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                  activeTab === 'Services'
-                    ? 'font-bold border-b-4 border-white pb-1'
-                    : 'font-normal'
-                }`}
-              >
-                Services
-              </button>
+              <Link to='/services'>
+                <button
+                  onClick={() => {
+                    setActiveTab('Services');
+                    setIsMenuOpen(false);
+                  }}
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
+                    activeTab === 'Services'
+                      ? 'font-bold border-b-4 border-white pb-1'
+                      : 'font-normal'
+                  }`}
+                >
+                  Services
+                </button>
               </Link>
             </div>
           </div>

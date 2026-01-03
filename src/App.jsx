@@ -21,7 +21,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import AOS from 'aos';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import 'aos/dist/aos.css';
 
 ////////////////////////////////////////
@@ -39,12 +39,12 @@ import {
   Login,
   Services,
   Logout,
-
 } from './pages';
 import { DashboardNavBar, Navbar } from './components';
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
 import { useAuthStore } from './store/auth-store';
 import { ToastContainer } from 'react-toastify';
+import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx';
 import { Footer } from 'react-day-picker';
 import axios from 'axios';
 import CounsellorsGrid from './pages/Counsellor';
@@ -112,7 +112,7 @@ const AppContent = () => {
         draggable
         toastClassName={'toast-uppercase'}
       />
-      {/* {!hideNavbar && <Navbar /> */}
+      {/* {!hideNavbar && <Navbar />} */}
       {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
@@ -123,13 +123,16 @@ const AppContent = () => {
         <Route path='/reset-password/:emailId' element={<ResetPasswordOTP />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
+        <Route path='/counsellor/profile' element={<CounsellorProfile />} />
+
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path="counsellor" element={< CounsellorsGrid />} />
+        <Route path='counsellor' element={<CounsellorsGrid />} />
       </Routes>
       <div>
-        <Footer />
+        {' '}
+        <Footer />{' '}
       </div>
     </div>
   );
