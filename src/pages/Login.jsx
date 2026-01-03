@@ -235,7 +235,7 @@ export default function Login() {
                 <button
                   type='google-login'
                   onClick={() => handleGoogleLogin()}
-                  disabled={submitting}
+                  // disabled={submitting}
                   className='group cursor-pointer flex items-center justify-center gap-3 rounded-full mx-2 text-nowrap
                   bg-linear-to-r from-[#8E76F2] to-[#B28AF9] h-12 lg:h-14 w-[200px] lg:w-[500px]
                   text-white font-medium text-xs md:text-base px-2 montserrat

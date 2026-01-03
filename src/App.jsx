@@ -39,7 +39,7 @@ import {
   Login,
   Services,
   Logout,
-
+  RazorpayTemporary,
 } from './pages';
 import { DashboardNavBar, Navbar } from './components';
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
@@ -126,7 +126,8 @@ const AppContent = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path="counsellor" element={< CounsellorsGrid />} />
+        <Route path='/counsellor' element={<CounsellorsGrid />} />
+        <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
       </Routes>
       <div>
         <Footer />

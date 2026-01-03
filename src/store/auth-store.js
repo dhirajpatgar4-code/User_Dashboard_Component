@@ -8,10 +8,12 @@ export const useAuthStore = create(
       profilePic: '',
       fullName: '',
       clientEmail: '',
+      clientPhone: '',
       toggleAuthState: (value) => set({ authenticated: value }),
       setProfilePic: (value) => set({ profilePic: value }),
       setFullName: (value) => set({ fullName: value }),
       setClientEmail: (value) => set({ clientEmail: value }),
+      setClientPhone: (value) => set({ clientPhone: value }),
     }),
     {
       name: 'auth-storage',
