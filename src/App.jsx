@@ -128,7 +128,7 @@ const AppContent = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path='counsellor' element={<CounsellorsGrid />} />
+        <Route path='/counsellor' element={<CounsellorsGrid />} />
       </Routes>
       <div>
         {' '}
