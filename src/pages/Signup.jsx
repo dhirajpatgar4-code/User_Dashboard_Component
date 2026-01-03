@@ -3,8 +3,14 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
-import { signupUser } from '../services/authServiceNew';
+import {
+  sendEmailVerificationOtp,
+  signupUser,
+} from '../services/authServiceNew';
 import { Link, useNavigate } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
+import { useAuthStore } from '../store/auth-store';
+import GoogleIcon from '../assets/google-icon.png';
 
 /* =======================
    ZOD VALIDATION
@@ -123,6 +129,13 @@ const CustomDropdown = ({ options, placeholder, value, onChange }) => {
    SIGNUP COMPONENT
 ======================= */
 const Signup = () => {
+  const isAuthenticated = useAuthStore((state) => state.authenticated);
+  useTitle('Signup');
+  useEffect(() => {
+    if (isAuthenticated) {
+      // navigate('/');
+    }
+  });
   const [showCalendar, setShowCalendar] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -171,20 +184,32 @@ const Signup = () => {
       }
 
       toast.success('Welcome! Your account is ready.');
-      setTimeout(() => navigate(`/verify-otp/${form.email}`), 2000);
+      await sendEmailVerificationOtp(form.email);
+      navigate(`/verify-otp/${form.email}`);
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast.error(error.issues[0].message);
       } else {
-        toast.error(error.response.data.msg || 'Something went wrong');
+        toast.error(error.response.data.message || 'Something went wrong');
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const handleGoogleSignup = async () => {
+    try {
+      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/user/auth/google`;
+    } catch (error) {
+      console.error('Signup failed', error);
+    }
+  };
+
   return (
-    <div className='relative min-h-screen bg-white overflow-hidden'>
+    <div
+      data-aos='fade-left'
+      className='relative min-h-screen bg-white overflow-hidden'
+    >
       {/* Desktop Safe Harbour */}
       <div className='hidden md:block absolute top-[60px] left-[60px] text-[#8473E8] text-[22px] font-bold'>
         Safe Harbour
@@ -314,9 +339,19 @@ const Signup = () => {
           <button
             type='submit'
             disabled={loading}
-            className='bg-[#8473E8] hover:bg-[#5a3dcf] px-10 py-3 rounded-full flex items-center gap-3 text-white text-lg'
+            className='bg-[#8473E8] hover:bg-[#5a3dcf] cursor-pointer md:w-140 w-100 py-3 rounded-full flex justify-center items-center gap-3 text-white text-lg'
           >
-            {loading ? 'Please wait...' : 'Continue'}
+            {loading ? 'Please wait...' : 'Sign Up'}
+          </button>
+        </div>
+        <div className='w-full flex justify-center mt-2'>
+          <button
+            onClick={() => handleGoogleSignup()}
+            disabled={loading}
+            className='bg-[#8473E8] hover:bg-[#5a3dcf] cursor-pointer md:w-140 py-3 w-100 rounded-full flex justify-center items-center gap-3 text-white text-lg'
+          >
+            <img className='w-7 h-7' src={GoogleIcon} alt='google-signup' />
+            Sign up with Google
           </button>
         </div>
         <p className='text-center text-xs text-[#8A8A8A] mt-5'>

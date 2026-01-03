@@ -2,7 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import RightArrow from '../assets/RightArrow.svg';
-import { verifyUserOtp, verifyUserPasswordOtp } from '../services/authServiceNew';
+import {
+  verifyUserOtp,
+  sendPasswordResetOtp,
+  verifyUserPasswordOtp,
+} from '../services/authServiceNew';
 import { toast } from 'react-toastify';
 
 const OTP_LENGTH = 4;
@@ -102,7 +106,7 @@ export default function ResetPasswordOTP() {
       navigate('/reset-password');
       sessionStorage.setItem('user-email', email);
     } catch (error) {
-      toast.error(error?.response?.data?.msg);
+      toast.error(error?.response?.data?.message);
       resetOtp();
     } finally {
       setSubmitting(false);
@@ -123,9 +127,12 @@ export default function ResetPasswordOTP() {
     setError('');
 
     try {
-      // const { forgotPassword } = await import('../../services/authService');
-      // await forgotPassword(email);
-    } catch {
+      const res = await sendPasswordResetOtp(email);
+      if (res.status === 200) {
+        toast.success('New OTP has been sent!');
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
       setError('Failed to resend code. Try again.');
     }
   };

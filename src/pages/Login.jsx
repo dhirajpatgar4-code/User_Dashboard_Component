@@ -4,8 +4,9 @@ import RightArrow from '../assets/RightArrow.svg';
 import LoginHero from '../assets/login 1.png';
 import Logo from '../assets/Logo.png';
 import { userLogin } from '../services/authServiceNew';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth-store';
+import GoogleIcon from '../assets/google-icon.png';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,27 +51,26 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTouched({ email: true, password: true });
 
     if (!isFormValid || submitting) return;
 
     setSubmitting(true);
-    const loadingToast = toast.loading('Signing you in...');
+    // const loadingToast = toast.loading('Signing you in...');
 
     try {
       const res = await userLogin(formValues.email.trim(), formValues.password);
       console.log('🚀 ~ handleSubmit ~ res:', res);
 
-      toast.dismiss(loadingToast);
+      // toast.dismiss(loadingToast);
 
-      if (res?.message === 'Login successful') {
-        toast.success('Login successful');
+      if (res?.statusCode === 200) {
+        toast.success('Welcome back!');
         toggleAuthState(true);
         navigate('/');
         window.scrollTo(0, 0);
       }
     } catch (error) {
-      toast.dismiss(loadingToast);
+      // toast.dismiss(loadingToast);
 
       const status = error?.response?.status;
       const message =
@@ -104,8 +104,26 @@ export default function Login() {
     };
   }, []);
 
+  //==== || Navigate if already logged in || ==== //
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
+
+  const handleGoogleLogin = async () => {
+    try {
+      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/user/auth/google`;
+    } catch (error) {
+      console.error('Signup failed', error);
+    }
+  };
+
   return (
-    <div className='relative min-h-screen bg-white flex flex-col lg:flex-row overflow-hidden'>
+    <div
+      data-aos='fade-right'
+      className='relative min-h-screen bg-white flex flex-col lg:flex-row overflow-hidden'
+    >
       {/* MOBILE PURPLE ARC */}
       <div className='lg:hidden w-full bg-[#8E76F2] h-[220px] rounded-b-[200px] flex flex-col justify-center items-center'>
         <h1 className='montserrat text-center text-3xl font-semibold text-white px-6'>
@@ -116,7 +134,9 @@ export default function Login() {
       <div className='relative z-10 w-full lg:w-1/2 px-6 sm:px-10 lg:px-16 pt-6 lg:pt-6 pb-12 lg:pb-6 flex flex-col'>
         {/* DESKTOP BRAND */}
         <div className='hidden lg:flex items-center gap-2 text-base font-semibold text-[#8E76F2] mb-8'>
-          <span className='montserrat'>Safe Harbour</span>
+          <Link to='/'>
+            <span className='montserrat cursor-pointer'>Safe Harbour</span>
+          </Link>
         </div>
 
         {/* CENTER CONTENT */}
@@ -200,9 +220,9 @@ export default function Login() {
               <div className='flex justify-center'>
                 <button
                   type='submit'
-                  disabled={!isFormValid || submitting}
-                  className='group flex items-center justify-center gap-3 rounded-full
-                  bg-gradient-to-r from-[#8E76F2] to-[#B28AF9] h-12 lg:h-[56px] w-[200px] lg:w-[260px]
+                  disabled={submitting}
+                  className='group cursor-pointer flex items-center justify-center gap-3 rounded-full
+                  bg-linear-to-r from-[#8E76F2] to-[#B28AF9] h-12 lg:h-14 w-[200px] lg:w-[500px]
                   text-white font-medium text-base montserrat
                   hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed
                   transition-opacity shadow-lg'
@@ -210,6 +230,21 @@ export default function Login() {
                   {submitting ? 'Please wait...' : 'Continue'}
                   <span className='grid h-8 w-8 place-items-center rounded-full bg-white text-[#8E76F2]'>
                     <img src={RightArrow} alt='' className='h-4 w-4' />
+                  </span>
+                </button>
+                <button
+                  type='google-login'
+                  onClick={() => handleGoogleLogin()}
+                  disabled={submitting}
+                  className='group cursor-pointer flex items-center justify-center gap-3 rounded-full mx-2 text-nowrap
+                  bg-linear-to-r from-[#8E76F2] to-[#B28AF9] h-12 lg:h-14 w-[200px] lg:w-[500px]
+                  text-white font-medium text-xs md:text-base px-2 montserrat
+                  hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed
+                  transition-opacity shadow-lg'
+                >
+                  {submitting ? 'Please wait...' : 'Log in with Google'}
+                  <span className='grid h-8 w-8 place-items-center rounded-full bg-white text-[#8E76F2]'>
+                    <img src={GoogleIcon} alt='' className='h-4 w-4' />
                   </span>
                 </button>
               </div>

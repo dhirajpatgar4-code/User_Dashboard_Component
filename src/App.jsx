@@ -21,7 +21,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import AOS from 'aos';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import 'aos/dist/aos.css';
 
 ////////////////////////////////////////
@@ -31,19 +31,24 @@ import 'aos/dist/aos.css';
 import {
   Home,
   AdminLogin,
+  Signup,
   ForgotPassword,
   VerifyOTP,
-  ResetPassword,
-  Signup,
-  ThanksCard,
-  CounsellorSignup,
-  Login,
   ResetPasswordOTP,
+  ResetPassword,
+  Login,
+  Services,
+  Logout,
 } from './pages';
-import { Footer, Navbar, DashboardNavBar } from './components';
+import { DashboardNavBar, Navbar } from './components';
+import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
+import { useAuthStore } from './store/auth-store';
 import { ToastContainer } from 'react-toastify';
 import { useAuthStore } from './store/auth-store.js';
 import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx';
+import { Footer } from 'react-day-picker';
+import axios from 'axios';
+import CounsellorsGrid from './pages/Counsellor';
 
 const AppContent = () => {
   const location = useLocation();
@@ -55,11 +60,46 @@ const AppContent = () => {
 
   const isAuthenticated = useAuthStore((state) => state.authenticated);
   const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
+  const setProfilePic = useAuthStore((state) => state.setProfilePic);
+  const setFullName = useAuthStore((state) => state.setFullName);
+  const setUserEmail = useAuthStore((state) => state.setClientEmail);
 
   //=== [DEBUG USE-EFFECT LOG] ===//
   useEffect(() => {
     console.log('[AUTH STATE]', isAuthenticated);
-  }, [isAuthenticated]);
+    // check if authenticated
+    const checkAuth = async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/current-user`,
+        {
+          withCredentials: true,
+        },
+      );
+      const userData = res?.data?.data;
+      setFullName(userData?.fullname);
+      setUserEmail(userData?.email);
+      setProfilePic(userData?.profilePic);
+      if (res.status === 200) {
+        toggleAuthState(true);
+      }
+      return res;
+    };
+    // check google auth
+    const checkEmailAuth = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/info`, {
+        withCredentials: true,
+      });
+      console.log('🚀 ~ checkEmailAuth ~ res:', res);
+    };
+    if (!isAuthenticated) {
+      // Check if user is authenticated with google
+      const res = checkAuth();
+      if (res.status !== 200) {
+        // Check if user is authenticated with email & password
+        checkEmailAuth();
+      }
+    }
+  }, []);
 
   return (
     <div>
@@ -87,7 +127,9 @@ const AppContent = () => {
         <Route path='/counsellor/profile' element={<CounsellorProfile />} />
 
         <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<DashboardNavBar />} />
+        <Route path='/services' element={<Services />} />
+        <Route path='/logout' element={<Logout />} />
+        <Route path='counsellor' element={<CounsellorsGrid />} />
       </Routes>
       <div>{/* <Footer /> */}</div>
     </div>

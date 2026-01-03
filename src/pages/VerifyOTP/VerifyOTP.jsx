@@ -121,8 +121,9 @@ export default function VerifyOTP() {
     setError('');
 
     try {
-      const { forgotPassword } = await import('../../services/authService');
-      await forgotPassword(email);
+      const { sendEmailVerificationOtp } =
+        await import('../../services/authServiceNew');
+      await sendEmailVerificationOtp(email);
     } catch {
       setError('Failed to resend code. Try again.');
     }
@@ -239,7 +240,7 @@ export default function VerifyOTP() {
 
             <p className='text-[#8A8A8A]'>
               Entered wrong email?{' '}
-              <a className='text-[#8E76F2] underline' href='/forgot'>
+              <a className='text-[#8E76F2] underline' href='/login'>
                 Back
               </a>
             </p>

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
 import RightArrow from '../../assets/RightArrow.svg';
-import { forgotPassword } from '../../services/authService';
-import { sendOTP } from '../../services/authServiceNew';
+import { sendPasswordResetOtp } from '../../services/authServiceNew';
 import { toast } from 'react-toastify';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,7 +44,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      const res = await sendOTP(email);
+      const res = await sendPasswordResetOtp(email);
       console.log('🚀 ~ handleSubmit ~ res:', res);
 
       if (res.status === 200) {

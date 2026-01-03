@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
+import { useAuthStore } from '../store/auth-store';
+import { logout } from '../services/authServiceNew';
+import { Link } from 'react-router-dom';
+
+// const [cookies] = useCookies(["authToken"]);// usecookie
 
 function DashboardNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Counsellors');
   const [opensearch, setIsopensearch] = useState(false);
+  const [openUser, setopenUser] = useState(false);
+  const fullName = useAuthStore((state) => state.fullName);
+  const email = useAuthStore((state) => state.clientEmail);
+  const profilePic = useAuthStore((state) => state.profilePic);
+
+  // Mock user data - replace with actual user data
+  const userData = {
+    name: fullName || 'User',
+    email: email || 'user@gmail.com',
+    avatar:
+      profilePic || 'https://api.dicebear.com/7.x/avataaars/svg?seed=user',
+  };
 
   return (
     <>
       {/* Single Navbar for both Desktop and Mobile */}
-      <nav className='bg-white/90 shadow-sm sticky top-0 z-40'>
+      <nav className='bg-white/90 sticky top-0 z-40'>
         <div className='w-full mx-auto px-2 sm:px-4 lg:px-8'>
           <div className='flex items-center justify-between h-16 sm:h-20'>
             {/* Logo */}
@@ -27,7 +44,7 @@ function DashboardNavBar() {
             </div>
 
             {/* Desktop Navigation - Hidden on Mobile */}
-            <div className='hidden md:flex items-center border-2 border-[#8473E8] rounded-full bg-white relative'>
+            <div className='hidden md:flex items-center border-2 border-[#8473E8] rounded-full bg-white/10 relative'>
               {/* Sliding Background */}
               <div
                 className='absolute bg-[#8473E8]  rounded-full transition-all duration-300 ease-in-out'
@@ -45,7 +62,7 @@ function DashboardNavBar() {
                   top: '4px',
                 }}
               />
-
+               <Link to='/home' >
               <button
                 onClick={() => setActiveTab('Dashboard')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -56,6 +73,8 @@ function DashboardNavBar() {
               >
                 Dashboard
               </button>
+              </Link>
+              <Link to='/chat' >
               <button
                 onClick={() => setActiveTab('Chats')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -66,6 +85,8 @@ function DashboardNavBar() {
               >
                 Chats
               </button>
+              </Link>
+              <Link to='/counsellor' >
               <button
                 onClick={() => setActiveTab('Counsellors')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -76,6 +97,8 @@ function DashboardNavBar() {
               >
                 Counsellors
               </button>
+              </Link>
+              <Link to='/services' >
               <button
                 onClick={() => setActiveTab('Services')}
                 className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
@@ -86,10 +109,11 @@ function DashboardNavBar() {
               >
                 Services
               </button>
+              </Link>
             </div>
 
             {/* Search Bar - Hidden on Mobile */}
-            <div className='hidden lg:flex items-center bg-gray-50 border border-[#8473E8] rounded-full px-4 xl:px-5 py-2.5 xl:py-3 w-72 xl:w-96'>
+            <div className='hidden lg:flex items-center bg-white/10 border border-[#8473E8] rounded-full px-4 xl:px-5 py-2.5 xl:py-3 w-72 xl:w-96'>
               <Search className='w-5 h-5 text-[#8473E8]' />
               <input
                 type='text'
@@ -143,10 +167,13 @@ function DashboardNavBar() {
                   </button>
 
                   {/* User Avatar */}
-                  <div className='relative mr-3 flex items-center ml-1 sm:ml-2'>
+                  <div
+                    onClick={() => setopenUser(!openUser)}
+                    className='relative mr-3 flex items-center ml-1 sm:ml-2 cursor-pointer'
+                  >
                     <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                       <img
-                        src='https://api.dicebear.com/7.x/avataaars/svg?seed=user'
+                        src={userData.avatar}
                         alt='User'
                         className='w-full h-full'
                       />
@@ -158,10 +185,13 @@ function DashboardNavBar() {
             </div>
 
             {/* Desktop User Avatar - Hidden on Mobile */}
-            <div className='hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity'>
+            <div
+              onClick={() => setopenUser(!openUser)}
+              className='hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity'
+            >
               <div className='w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                 <img
-                  src='https://api.dicebear.com/7.x/avataaars/svg?seed=user'
+                  src={userData.avatar}
                   alt='User'
                   className='w-full h-full'
                 />
@@ -171,6 +201,126 @@ function DashboardNavBar() {
           </div>
         </div>
       </nav>
+
+      {/* User Profile Dropdown Menu */}
+      {openUser && (
+        <>
+          {/* Backdrop */}
+          <div
+            className='fixed inset-0 z-40'
+            onClick={() => setopenUser(false)}
+          />
+
+          {/* Desktop Dropdown */}
+          <div className=' md:block hidden fixed top-20 right-4 lg:right-8 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden'>
+            <div className='p-6 bg-gradient-to-br flex flex-col items-center justify-center content-center from-purple-50 to-white'>
+              <div className='relative inline-block '>
+                <img
+                  src={userData.avatar}
+                  alt={userData.name}
+                  className='w-28 h-28 rounded-full border-4 border-white shadow-lg'
+                />
+                <button className='absolute bottom-0 right-0 bg-[#8473E8] hover:bg-purple-700 text-white p-1.5 rounded-full shadow-lg transition-colors'>
+                  <svg
+                    className='w-3.5 h-3.5'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className='mt-4'>
+                <h3 className='text-lg font-semibold text-gray-900'>
+                  {userData.name}
+                </h3>
+                <p className='text-sm text-gray-600 mt-1'>{userData.email}</p>
+              </div>
+            </div>
+            <div className='p-3'>
+              <button
+                onClick={() => logout()}
+                className='w-full flex items-center justify-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-colors'
+              >
+                <svg
+                  className='w-5 h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
+                  />
+                </svg>
+                Logout
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Dropdown */}
+          <div className='md:hidden fixed top-20 right-4 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden'>
+            <div className='p-5 sm:p-6 bg-gradient-to-br from-purple-50 to-white'>
+              <div className='relative inline-block'>
+                <img
+                  src={userData.avatar}
+                  alt={userData.name}
+                  className='w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-white shadow-lg'
+                />
+                <button className='absolute bottom-0 right-0 bg-[#8473E8] hover:bg-purple-700 active:bg-purple-800 text-white p-1.5 rounded-full shadow-lg transition-colors'>
+                  <svg
+                    className='w-3 h-3 sm:w-3.5 sm:h-3.5'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className='mt-3 sm:mt-4'>
+                <h3 className='text-base sm:text-lg font-semibold text-gray-900'>
+                  {userData.name}
+                </h3>
+                <p className='text-xs sm:text-sm text-gray-600 mt-1 truncate'>
+                  {userData.email}
+                </p>
+              </div>
+            </div>
+            <div className='p-3'>
+              <button className='w-full flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 text-red-600 hover:bg-red-50 active:bg-red-100 rounded-xl font-medium transition-colors'>
+                <svg
+                  className='w-4 h-4 sm:w-5 sm:h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
+                  />
+                </svg>
+                <span onClick={() => logout()} className='text-sm sm:text-base'>Logout</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Mobile Overlay Menu with Circle Design */}
       {isMenuOpen && (
@@ -188,6 +338,7 @@ function DashboardNavBar() {
           >
             {/* Menu Items in Grid Layout */}
             <div className='grid grid-cols-2 gap-x-14 gap-y-5  px-24 py-8 max-w-md mx-auto'>
+              <Link to='/home'>
               <button
                 onClick={() => {
                   setActiveTab('Dashboard');
@@ -201,6 +352,8 @@ function DashboardNavBar() {
               >
                 Dashboard
               </button>
+              </Link>
+              <Link to='/counsellor'>
               <button
                 onClick={() => {
                   setActiveTab('Chats');
@@ -214,6 +367,8 @@ function DashboardNavBar() {
               >
                 Chat
               </button>
+              </Link>
+              <Link to='/counsellor' >
               <button
                 onClick={() => {
                   setActiveTab('Counsellors');
@@ -227,6 +382,8 @@ function DashboardNavBar() {
               >
                 Counsellors
               </button>
+              </Link>
+              <Link to='/services' >
               <button
                 onClick={() => {
                   setActiveTab('Services');
@@ -240,6 +397,7 @@ function DashboardNavBar() {
               >
                 Services
               </button>
+              </Link>
             </div>
           </div>
         </>
