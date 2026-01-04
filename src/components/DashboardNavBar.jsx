@@ -34,7 +34,7 @@ function DashboardNavBar() {
               <div className='w-8 h-8 sm:w-12 sm:h-12 sm:-ml-14 sm:mr-4 rounded-xl flex items-center justify-center'>
                 <img
                   className='w-6 h-6 sm:size-10'
-                  src={`${import.meta.env.VITE_FRONTEND_URL}/public/logo.png`}
+                  src="https://i.postimg.cc/HLSQ5WKF/Logo.png"
                   alt='error'
                 />
               </div>
