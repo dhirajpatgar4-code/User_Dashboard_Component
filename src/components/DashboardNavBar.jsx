@@ -3,7 +3,6 @@ import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuthStore } from '../store/auth-store';
 import { logout } from '../services/authServiceNew';
 import { Link } from 'react-router-dom';
-import Logo from '../../public/Logo.png';
 
 // const [cookies] = useCookies(["authToken"]);// usecookie
 
@@ -33,7 +32,11 @@ function DashboardNavBar() {
             {/* Logo */}
             <div className='flex ml-14 items-center gap-2 sm:gap-3'>
               <div className='w-8 h-8 sm:w-12 sm:h-12 sm:-ml-14 sm:mr-4 rounded-xl flex items-center justify-center'>
-                <img className='w-6 h-6 sm:size-10' src={Logo} alt='error' />
+                <img
+                  className='w-6 h-6 sm:size-10'
+                  src={`${import.meta.env.VITE_FRONTEND_URL}/public/logo.png`}
+                  alt='error'
+                />
               </div>
               <span className='text-[#8473E8] font-semibold sm:-ml-4 text-base sm:text-xl hidden sm:block'>
                 Safe Harbour
