@@ -16,6 +16,8 @@ export default function Login() {
   const [submitting, setSubmitting] = useState(false);
   const isAuthenticated = useAuthStore((state) => state.authenticated);
   const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
+  const toggleAuthType = useAuthStore((state) => state.setAuthType);
+  const setToken = useAuthStore((state) => state.setSecureToken);
 
   // =========================
   // Frontend validation
@@ -65,6 +67,8 @@ export default function Login() {
 
       if (res?.statusCode === 200) {
         toast.success('Welcome back!');
+        toggleAuthType('google');
+        setToken(res?.data?.token);
         toggleAuthState(true);
         navigate('/');
         window.scrollTo(0, 0);

@@ -34,7 +34,7 @@ function DashboardNavBar() {
               <div className='w-8 h-8 sm:w-12 sm:h-12 sm:-ml-14 sm:mr-4 rounded-xl flex items-center justify-center'>
                 <img
                   className='w-6 h-6 sm:size-10'
-                  src="https://i.postimg.cc/HLSQ5WKF/Logo.png"
+                  src='https://i.postimg.cc/HLSQ5WKF/Logo.png'
                   alt='error'
                 />
               </div>
@@ -173,7 +173,7 @@ function DashboardNavBar() {
                   >
                     <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                       <img
-                        src={userData.avatar}
+                        src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
                         alt='User'
                         className='w-full h-full'
                       />
@@ -191,7 +191,7 @@ function DashboardNavBar() {
             >
               <div className='w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                 <img
-                  src={userData.avatar}
+                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
                   alt='User'
                   className='w-full h-full'
                 />
@@ -216,7 +216,7 @@ function DashboardNavBar() {
             <div className='p-6 bg-gradient-to-br flex flex-col items-center justify-center content-center from-purple-50 to-white'>
               <div className='relative inline-block '>
                 <img
-                  src={userData.avatar}
+                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
                   alt={userData.name}
                   className='w-28 h-28 rounded-full border-4 border-white shadow-lg'
                 />
@@ -271,7 +271,7 @@ function DashboardNavBar() {
             <div className='p-5 sm:p-6 bg-gradient-to-br from-purple-50 to-white'>
               <div className='relative inline-block'>
                 <img
-                  src={userData.avatar}
+                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
                   alt={userData.name}
                   className='w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-white shadow-lg'
                 />

@@ -2,13 +2,17 @@
 import axios from 'axios';
 // import apiPublic from "./apiPublic";
 import { toast } from 'react-toastify';
+import { useAuthStore } from '../store/auth-store';
 // import { getDecryptedToken } from "../utils/cryptoUtil";
 
 axios.defaults.withCredentials = true;
+const token = useAuthStore.getState().secureToken;
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 api.interceptors.response.use(
@@ -16,13 +20,13 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       // Token expired or invalid
-      // toast.info('Session expired, logging out...');
+      toast.info('Session expired, logging out...');
       // Clear local user state
-      localStorage.removeItem('authenticated-data-storage');
+      localStorage.clear();
       // Redirect to login
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 1000);
     }
     return Promise.reject(error);
   },

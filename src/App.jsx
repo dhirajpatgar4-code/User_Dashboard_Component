@@ -41,7 +41,7 @@ import {
   Logout,
   RazorpayTemporary,
 } from './pages';
-import { DashboardNavBar, Navbar } from './components';
+import { CaptureToken, DashboardNavBar, Navbar } from './components';
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
 import { useAuthStore } from './store/auth-store';
 import { ToastContainer } from 'react-toastify';
@@ -63,16 +63,19 @@ const AppContent = () => {
   const setProfilePic = useAuthStore((state) => state.setProfilePic);
   const setFullName = useAuthStore((state) => state.setFullName);
   const setUserEmail = useAuthStore((state) => state.setClientEmail);
-
+  const token = useAuthStore((state) => state.secureToken);
   //=== [DEBUG USE-EFFECT LOG] ===//
   useEffect(() => {
     console.log('[AUTH STATE]', isAuthenticated);
+    if (!token) return;
     // check if authenticated
     const checkAuth = async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/current-user`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
       const userData = res?.data?.data;
@@ -87,19 +90,27 @@ const AppContent = () => {
     // check google auth
     const checkEmailAuth = async () => {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/info`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       console.log('🚀 ~ checkEmailAuth ~ res:', res);
     };
-    if (!isAuthenticated) {
-      // Check if user is authenticated with google
-      const res = checkAuth();
-      if (res.status !== 200) {
-        // Check if user is authenticated with email & password
-        checkEmailAuth();
+    const run = async () => {
+      try {
+        const res = await checkAuth();
+        console.log('🚀 ~ run ~ res:', res);
+      } catch {
+        try {
+          const res = checkEmailAuth();
+          console.log('🚀 ~ run ~ res:', res);
+        } catch {
+          toggleAuthState(false);
+        }
       }
-    }
-  }, []);
+    };
+    run();
+  }, [token]);
 
   return (
     <div>
@@ -124,13 +135,17 @@ const AppContent = () => {
         <Route path='/reset-password/:emailId' element={<ResetPasswordOTP />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
-        <Route path='/counsellor/profile/:email' element={<CounsellorProfile />} />
+        <Route
+          path='/counsellor/profile/:email'
+          element={<CounsellorProfile />}
+        />
 
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
         <Route path='/logout' element={<Logout />} />
         <Route path='/counsellor' element={<CounsellorsGrid />} />
         <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
+        <Route path='/verify-token' element={<CaptureToken />} />
       </Routes>
       <div>
         {' '}
