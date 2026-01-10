@@ -1,29 +1,16 @@
-// data/doctors.js
-import doctorImage from '../assets/doctor.png';
+import axios from 'axios';
+// 1. Define the base URL
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
-export const doctors = [
-  {
-    id: 1,
-    doctorName: 'Michael B.',
-    speciality: 'Pediatric Specialists',
-    image: doctorImage,
-  },
-  {
-    id: 2,
-    doctorName: 'Sarah K.',
-    speciality: 'Cardiology',
-    image: doctorImage,
-  },
-  {
-    id: 3,
-    doctorName: 'John D.',
-    speciality: 'Orthopedics',
-    image: doctorImage,
-  },
-  {
-    id: 4,
-    doctorName: 'Emily R.',
-    speciality: 'Neurology',
-    image: doctorImage,
-  },
-];
+// 2. Construct the full API URL
+const API_URL = `${BASE_URL}/api/counsellor/getrandomcounsellor`;
+
+export const getRandomCounsellors = async () => {
+  try {
+    const response = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    console.error("Axios fetch error:", error);
+    throw error;
+  }
+};

@@ -1,13 +1,37 @@
 import { useState, useEffect } from 'react';
-import doctorImage from '../../../assets/doctor.png';
+import doctorImage from '../../../assets/doctor.png'; 
 import ButtonCallToAction from '../button/ButtonCallToAction';
 import { socialLinks } from '../../../data/social';
-import { doctors } from '../../../data/doctor';
+import { getRandomCounsellors } from '../../../data/doctor'; 
 
 const DoctorUI = () => {
+  const [doctorList, setDoctorList] = useState([]); 
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [aosAnimation, setAosAnimation] = useState('fade-up');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRandomCounsellors();
+        if (response.success && response.data) {
+          const formattedDoctors = response.data
+            .filter(item => item.fullname) // Remove empty {} objects
+            .map(item => ({
+              _id: item._id,
+              doctorName: item.fullname,      // Map 'fullname' to 'doctorName'
+              speciality: item.specialties,   // Map 'specialties' to 'speciality'
+              // Use API image, fallback to local import if missing
+              image: item.documents?.profile_picture || doctorImage 
+            }));
+          setDoctorList(formattedDoctors);
+        }
+      } catch (error) {
+        console.error("Failed to fetch doctors", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const resize = () => setIsMobile(window.innerWidth < 768);
@@ -16,16 +40,21 @@ const DoctorUI = () => {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
+  // 3. Change: specific logic to use doctorList.length instead of static doctors.length
   const prev = () => {
     setAosAnimation('fade-right');
-    setIndex((i) => (i === 0 ? doctors.length - 1 : i - 1));
+    setIndex((i) => (i === 0 ? doctorList.length - 1 : i - 1));
   };
   const next = () => {
     setAosAnimation('fade-left');
-    setIndex((i) => (i === doctors.length - 1 ? 0 : i + 1));
+    setIndex((i) => (i === doctorList.length - 1 ? 0 : i + 1));
   };
 
-  const visibleDoctors = isMobile ? [doctors[index]] : doctors.slice(0, 3);
+  // 4. Change: Slicing from doctorList
+  // Check if doctorList has data, otherwise render nothing or a loader
+  if (doctorList.length === 0) return <div>Loading...</div>;
+
+  const visibleDoctors = isMobile ? [doctorList[index]] : doctorList.slice(0, 3);
 
   return (
     <div className='grid place-items-center'>
@@ -55,16 +84,19 @@ const DoctorUI = () => {
 
         {/* CARDS */}
         <div className='flex gap-8'>
-          {visibleDoctors.map((doc) => (
+          {visibleDoctors.map((doc, idx) => (
             <div
               data-aos={aosAnimation}
-              key={doc.doctorName}
+              // Use unique ID from DB, fallback to index
+              key={doc._id || idx} 
               className='relative w-[201px] h-[251px] md:w-[402px] md:h-[502px]'
             >
+              {/* 5. Change: Use dynamic image source */}
               <img
-                src={doctorImage}
+                src={doc.image} 
                 alt='doctor'
                 className='absolute inset-0 w-full h-full object-cover rounded-3xl'
+                onError={(e) => { e.target.src = doctorImage; }} // Safety fallback if URL fails
               />
 
               {/* GLASS CARD */}
@@ -100,10 +132,7 @@ const DoctorUI = () => {
                               p-3 flex flex-col justify-between text-white'
               >
                 <div className='md:mt-4'>
-                  <p
-                    className='text-[13px] md:text-[26px] text-white font-semibold leading-normal
-'
-                  >
+                  <p className='text-[13px] md:text-[26px] text-white font-semibold leading-normal'>
                     {doc.doctorName}
                   </p>
                   <p className='text-[10px] md:text-[14px] text-white/54 font-semibold leading-normal'>
@@ -116,6 +145,8 @@ const DoctorUI = () => {
                     <a
                       key={social.id}
                       href={social.link}
+                      target="_blank"                
+                      rel="noopener noreferrer"
                       className='h-6 w-6 rounded-full ml-2 flex items-center justify-center'
                     >
                       <img
