@@ -43,7 +43,7 @@ export function StepOne({ nextStep }) {
           <InputField
             type='tel'
             placeholder='Phone'
-            {...register('phone_number')}
+            {...register('contact_number')}
             error={errors.phone_number?.message}
           />
 
@@ -77,7 +77,7 @@ export function StepOne({ nextStep }) {
           <InputField
             type='password'
             placeholder='Password'
-            {...register('password')}
+            {...register('Password')}
             error={errors.password?.message}
           />
 
@@ -99,7 +99,7 @@ export function StepOne({ nextStep }) {
         </p>
       </div>
       <div className='flex flex-col items-center mt-4'>
-        <ButtonCallToAction content='Continue' handlClick={handleNext} />
+        <ButtonCallToAction content='Continue' handleClick={handleNext} />
       </div>
     </>
   );

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// import "react-datepicker/dist/react-datepicker.css";
 import { FormProvider, useForm } from 'react-hook-form';
 import { StepOne } from './components/forms/StepOne';
 import { StepTwo } from './components/forms/StepTwo';
@@ -11,6 +10,9 @@ import { StepFive } from './components/forms/StepFive';
 import { StepFour } from './components/forms/StepFour';
 import { counsellorSignupSchema } from './schema/counsellor.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
+import api from '../../services/apiClient';
+import Spinner from '../../components/ui/Spinner';
 
 export default function CounsellorSignup() {
   const methods = useForm({
@@ -19,8 +21,8 @@ export default function CounsellorSignup() {
     defaultValues: {
       fullname: '',
       email: '',
-      password: '',
-      phone_number: '',
+      Password: '',
+      contact_number: '',
       dob: '',
       gender: '',
       languages: '',
@@ -38,16 +40,17 @@ export default function CounsellorSignup() {
   const { handleSubmit, trigger } = methods;
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const stepFields = {
     1: [
       'fullname',
       'dob',
-      'phone_number',
+      'contact_number',
       'gender',
       'email',
       'languages',
-      'password',
+      'Password',
       'timezone',
     ],
     2: ['counselling_type', 'specialties', 'years_experience', 'bio'],
@@ -68,7 +71,7 @@ export default function CounsellorSignup() {
     const isValid = await trigger(fields);
     if (!isValid) return;
 
-    setStep((prev) => Math.min(prev + 1));
+    setStep((prev) => Math.min(prev + 1, 5));
   };
 
   const prevStep = () => {
@@ -80,12 +83,11 @@ export default function CounsellorSignup() {
 
     if (!result.success) {
       console.error('FINAL VALIDATION FAILED', result.error.format());
-      alert('Something went wrong. Please review your details.');
+      toast.error('Something went wrong. Please review your details.');
       return;
     }
 
     console.log('FINAL FORM DATA:', data);
-    setSubmitted(true);
 
     const formData = new FormData();
 
@@ -100,24 +102,29 @@ export default function CounsellorSignup() {
     });
 
     try {
-      const res = await fetch('http://localhost:5000/api/counsellor/signup', {
-        method: 'POST',
-        body: formData,
+      setLoading(true);
+      const res = await api.post('/api/counsellor/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      const result = await res.json();
-
-      if (!res.ok) throw new Error(result.msg);
-
+      toast.success(res.data?.msg || 'Signup successful');
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      alert(err.message);
+      console.log('signup error', err);
+      toast.error(
+        err.response?.data?.message || 'Signup failed. Please try again.',
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className='flex   overflow-hidden  h-screen  sm:items-center relative '>
+      {loading && <Spinner />}
       {/* Desktop Safe Harbour */}
       <div
         className='hidden md:block m-[60px] absolute'
@@ -185,7 +192,7 @@ export default function CounsellorSignup() {
               </p>
             </div>
           </div>
-          <div className='hidden lg:block max-w-[540px] w-[40vw]  overflow-hidden '>
+          <div className='hidden lg:block lg:max-w-[540px] xl:max-w-[40vw] w-[40vw]  overflow-hidden '>
             <video
               src='/signup-doctor.mp4'
               autoPlay

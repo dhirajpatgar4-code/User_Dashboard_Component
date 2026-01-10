@@ -49,6 +49,7 @@ import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx'
 import { Footer } from 'react-day-picker';
 import axios from 'axios';
 import CounsellorsGrid from './pages/Counsellor';
+import Spinner from './components/ui/Spinner.jsx';
 
 const AppContent = () => {
   const location = useLocation();
@@ -124,7 +125,10 @@ const AppContent = () => {
         <Route path='/reset-password/:emailId' element={<ResetPasswordOTP />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
-        <Route path='/counsellor/profile/:email' element={<CounsellorProfile />} />
+        <Route
+          path='/counsellor/profile/:email'
+          element={<CounsellorProfile />}
+        />
 
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
