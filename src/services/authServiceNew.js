@@ -93,3 +93,19 @@ export const resetPassword = asyncHandler(async (pass, confPass, email) => {
   console.log('🚀 ~ res:', res);
   return res;
 });
+
+
+export const updateProfile = async (formData) => {
+  // formData is already a FormData object, just send it directly
+  const res = await api.put(
+    '/api/user/changeprofile',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+
+  return res;
+};
