@@ -1,17 +1,6 @@
 ////////////////////////////////////////////////////////
 //   THIS FILE FOLLOWS PROJECT STRUCTURE GUIDELINES   //
 ////////////////////////////////////////////////////////
-//  IMPORTANT:
-//  - This file serves as the central routing and layout handler.
-//  - Do NOT modify, remove, or add routes, components, or logic
-//    in this file unless you have been specifically assigned to do so.
-//  - All structural changes must follow project conventions and
-//    must be reviewed before merging.
-//  - Unauthorized edits may break global navigation, imports, or
-//    project-wide routing behavior.
-//  - Treat this file as a protected core file within the project.
-//
-////////////////////////////////////////////////////////
 
 import {
   BrowserRouter as Router,
@@ -19,15 +8,15 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom';
-import './App.css';
-import AOS from 'aos';
 import { useEffect } from 'react';
+import axios from 'axios';
+import AOS from 'aos';
 import 'aos/dist/aos.css';
+import './App.css';
 
-////////////////////////////////////////
-//      Components & Page Imports     //
-////////////////////////////////////////
+import { ToastContainer } from 'react-toastify';
 
+// ===================== Pages ===================== //
 import {
   Home,
   AdminLogin,
@@ -41,77 +30,85 @@ import {
   Logout,
   RazorpayTemporary,
 } from './pages';
-import { CaptureToken, DashboardNavBar, Navbar } from './components';
+
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
-import { useAuthStore } from './store/auth-store';
-import { ToastContainer } from 'react-toastify';
 import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx';
-import { Footer } from 'react-day-picker';
-import axios from 'axios';
 import CounsellorsGrid from './pages/Counsellor';
+
 import Spinner from './components/ui/Spinner.jsx';
+import UpdateProfilePage from './pages/UpdateProfilePage.jsx';
+
+// =================== Components =================== //
+import { CaptureToken, DashboardNavBar, Navbar } from './components';
+
+// =================== Store =================== //
+import { useAuthStore } from './store/auth-store';
+import ProtectedRoute from './utils/ProtectedRoute.jsx';
+
 
 const AppContent = () => {
   const location = useLocation();
+
   const hideNavbar =
     location.pathname === '/admin/login' ||
     location.pathname === '/signup' ||
     location.pathname === '/counsellor/signup' ||
     location.pathname === '/dashboard';
 
-  const isAuthenticated = useAuthStore((state) => state.authenticated);
-  const toggleAuthState = useAuthStore((state) => state.toggleAuthState);
-  const setProfilePic = useAuthStore((state) => state.setProfilePic);
-  const setFullName = useAuthStore((state) => state.setFullName);
-  const setUserEmail = useAuthStore((state) => state.setClientEmail);
-  const token = useAuthStore((state) => state.secureToken);
-  //=== [DEBUG USE-EFFECT LOG] ===//
+  const {
+    authenticated: isAuthenticated,
+    secureToken: token,
+    toggleAuthState,
+    setProfilePic,
+    setFullName,
+    setClientEmail,
+    setClientPhone,
+    setDob,
+    setGender,
+    setLanguage,
+    setTimeZone,
+  } = useAuthStore();
+
+  // ================= AUTH CHECK ================= //
   useEffect(() => {
-    console.log('[AUTH STATE]', isAuthenticated);
-    if (!token) return;
-    // check if authenticated
-    const checkAuth = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/current-user`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const userData = res?.data?.data;
-      setFullName(userData?.fullname);
-      setUserEmail(userData?.email);
-      setProfilePic(userData?.profilePic);
-      if (res.status === 200) {
-        toggleAuthState(true);
-      }
-      return res;
-    };
-    // check google auth
-    const checkEmailAuth = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/info`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log('🚀 ~ checkEmailAuth ~ res:', res);
-    };
-    const run = async () => {
+    if (!token) {
+      toggleAuthState(false);
+      return;
+    }
+
+    const fetchUser = async () => {
       try {
-        const res = await checkAuth();
-        console.log('🚀 ~ run ~ res:', res);
-      } catch {
-        try {
-          const res = checkEmailAuth();
-          console.log('🚀 ~ run ~ res:', res);
-        } catch {
-          toggleAuthState(false);
-        }
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/info`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const user = res.data?.data;
+
+        setFullName(user?.fullname || '');
+        setClientEmail(user?.email || '');
+        setClientPhone(user?.phone_number || '');
+        setDob(user?.dob || null);
+        setGender(user?.gender || '');
+        setLanguage(user?.preferred_language || '');
+        setTimeZone(user?.timezone || '');
+        setProfilePic(user?.profilePic || '');
+
+        toggleAuthState(true);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        toggleAuthState(false);
       }
     };
-    run();
+
+    fetchUser();
   }, [token]);
+
+  // ================================================= //
 
   return (
     <div>
@@ -125,8 +122,9 @@ const AppContent = () => {
         draggable
         toastClassName={'toast-uppercase'}
       />
-      {/* {!hideNavbar && <Navbar />} */}
+
       {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />}
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/admin/login' element={<AdminLogin />} />
@@ -135,30 +133,27 @@ const AppContent = () => {
         <Route path='/verify-otp/:emailId' element={<VerifyOTP />} />
         <Route path='/reset-password/:emailId' element={<ResetPasswordOTP />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/counsellor/signup' element={<CounsellorSignup />} />
-        <Route
-          path='/counsellor/profile/:email'
-          element={<CounsellorProfile />}
-        />
-
         <Route path='/login' element={<Login />} />
+        <Route path='/counsellor/signup' element={<CounsellorSignup />} />
+
+        <Route element={<ProtectedRoute />}>
         <Route path='/services' element={<Services />} />
         <Route path='/logout' element={<Logout />} />
+        <Route path='/counsellor/profile/:email' element={<CounsellorProfile />} />
         <Route path='/counsellor' element={<CounsellorsGrid />} />
         <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
         <Route path='/verify-token' element={<CaptureToken />} />
+        <Route path='/updateprofile' element={<UpdateProfilePage />} />
+        </Route>
       </Routes>
-      <div>
-        {' '}
-        <Footer />{' '}
-      </div>
     </div>
   );
 };
 
+// ================= ROOT APP ================= //
 const App = () => {
   useEffect(() => {
-    AOS.init();
+    AOS.init({ once: true });
   }, []);
 
   return (

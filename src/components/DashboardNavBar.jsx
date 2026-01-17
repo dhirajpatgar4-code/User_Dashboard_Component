@@ -3,25 +3,30 @@ import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuthStore } from '../store/auth-store';
 import { logout } from '../services/authServiceNew';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // const [cookies] = useCookies(["authToken"]);// usecookie
 
 function DashboardNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Counsellors');
+  const [activeTab, setActiveTab] = useState('Dashboard');
   const [opensearch, setIsopensearch] = useState(false);
   const [openUser, setopenUser] = useState(false);
   const fullName = useAuthStore((state) => state.fullName);
   const email = useAuthStore((state) => state.clientEmail);
   const profilePic = useAuthStore((state) => state.profilePic);
 
-  // Mock user data - replace with actual user data
+  // Mock user data - replace with actual user data - recalculate on every render
   const userData = {
     name: fullName || 'User',
     email: email || 'user@gmail.com',
     avatar:
       profilePic || 'https://api.dicebear.com/7.x/avataaars/svg?seed=user',
   };
+  const navigate = useNavigate()
+  const handleUpdate = async () => {
+    navigate("/updateprofile");
+  }
 
   return (
     <>
@@ -65,11 +70,10 @@ function DashboardNavBar() {
               <Link to='/home'>
                 <button
                   onClick={() => setActiveTab('Dashboard')}
-                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                    activeTab === 'Dashboard'
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${activeTab === 'Dashboard'
                       ? 'text-white'
                       : 'text-gray-700 hover:text-purple-600'
-                  }`}
+                    }`}
                 >
                   Dashboard
                 </button>
@@ -77,11 +81,10 @@ function DashboardNavBar() {
               <Link to='/chat'>
                 <button
                   onClick={() => setActiveTab('Chats')}
-                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                    activeTab === 'Chats'
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${activeTab === 'Chats'
                       ? 'text-white'
                       : 'text-gray-700 hover:text-purple-600'
-                  }`}
+                    }`}
                 >
                   Chats
                 </button>
@@ -89,11 +92,10 @@ function DashboardNavBar() {
               <Link to='/counsellor'>
                 <button
                   onClick={() => setActiveTab('Counsellors')}
-                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                    activeTab === 'Counsellors'
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${activeTab === 'Counsellors'
                       ? 'text-white'
                       : 'text-gray-700 hover:text-purple-600'
-                  }`}
+                    }`}
                 >
                   Counsellors
                 </button>
@@ -101,11 +103,10 @@ function DashboardNavBar() {
               <Link to='/services'>
                 <button
                   onClick={() => setActiveTab('Services')}
-                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${
-                    activeTab === 'Services'
+                  className={`px-6 lg:px-8 py-3 font-medium rounded-full transition-all duration-300 relative z-10 ${activeTab === 'Services'
                       ? 'text-white'
                       : 'text-gray-700 hover:text-purple-600'
-                  }`}
+                    }`}
                 >
                   Services
                 </button>
@@ -173,7 +174,7 @@ function DashboardNavBar() {
                   >
                     <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                       <img
-                        src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
+                        src={userData.avatar}
                         alt='User'
                         className='w-full h-full'
                       />
@@ -191,7 +192,7 @@ function DashboardNavBar() {
             >
               <div className='w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full overflow-hidden border-2 border-white shadow-md'>
                 <img
-                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
+                  src={userData.avatar}
                   alt='User'
                   className='w-full h-full'
                 />
@@ -216,11 +217,11 @@ function DashboardNavBar() {
             <div className='p-6 bg-gradient-to-br flex flex-col items-center justify-center content-center from-purple-50 to-white'>
               <div className='relative inline-block '>
                 <img
-                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
-                  alt={userData.name}
+                  src={userData.avatar}
+                  alt={userData.ava}
                   className='w-28 h-28 rounded-full border-4 border-white shadow-lg'
                 />
-                <button className='absolute bottom-0 right-0 bg-[#8473E8] hover:bg-purple-700 text-white p-1.5 rounded-full shadow-lg transition-colors'>
+                <button onClick={handleUpdate} className='absolute bottom-0 right-0 bg-[#8473E8] hover:bg-purple-700 text-white p-1.5 rounded-full shadow-lg transition-colors'>
                   <svg
                     className='w-3.5 h-3.5'
                     fill='none'
@@ -271,7 +272,7 @@ function DashboardNavBar() {
             <div className='p-5 sm:p-6 bg-gradient-to-br from-purple-50 to-white'>
               <div className='relative inline-block'>
                 <img
-                  src='https://cdn-icons-png.flaticon.com/512/10542/10542486.png'
+                  src={userData.avatar}
                   alt={userData.name}
                   className='w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-white shadow-lg'
                 />
@@ -346,11 +347,10 @@ function DashboardNavBar() {
                     setActiveTab('Dashboard');
                     setIsMenuOpen(false);
                   }}
-                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                    activeTab === 'Dashboard'
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${activeTab === 'Dashboard'
                       ? 'font-bold border-b-4 border-white pb-1'
                       : 'font-normal'
-                  }`}
+                    }`}
                 >
                   Dashboard
                 </button>
@@ -361,11 +361,10 @@ function DashboardNavBar() {
                     setActiveTab('Chats');
                     setIsMenuOpen(false);
                   }}
-                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                    activeTab === 'Chats'
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${activeTab === 'Chats'
                       ? 'font-bold border-b-4 border-white pb-1'
                       : 'font-normal'
-                  }`}
+                    }`}
                 >
                   Chat
                 </button>
@@ -376,11 +375,10 @@ function DashboardNavBar() {
                     setActiveTab('Counsellors');
                     setIsMenuOpen(false);
                   }}
-                  className={`text-white text-lg sm:text-xl text-left ${
-                    activeTab === 'Counsellors'
+                  className={`text-white text-lg sm:text-xl text-left ${activeTab === 'Counsellors'
                       ? 'font-bold border-b-4 border-white pb-1'
                       : 'font-normal'
-                  }`}
+                    }`}
                 >
                   Counsellors
                 </button>
@@ -391,11 +389,10 @@ function DashboardNavBar() {
                     setActiveTab('Services');
                     setIsMenuOpen(false);
                   }}
-                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${
-                    activeTab === 'Services'
+                  className={`text-white text-lg sm:text-xl hover:opacity-80 text-left ${activeTab === 'Services'
                       ? 'font-bold border-b-4 border-white pb-1'
                       : 'font-normal'
-                  }`}
+                    }`}
                 >
                   Services
                 </button>

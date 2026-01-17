@@ -67,32 +67,17 @@ export default function Login() {
 
       if (res?.statusCode === 200) {
         toast.success('Welcome back!');
-        toggleAuthType('google');
         setToken(res?.data?.token);
         toggleAuthState(true);
         navigate('/');
         window.scrollTo(0, 0);
       }
     } catch (error) {
-      // toast.dismiss(loadingToast);
-
-      const status = error?.response?.status;
       const message =
         error?.response?.data?.message ||
         error?.message ||
         'Something went wrong. Please try again.';
-
-      if (status === 401) {
-        toast.error('Invalid email or password');
-      } else if (status === 400) {
-        toast.error(message);
-      } else if (status >= 500) {
-        toast.error('Server error. Please try again later.');
-      } else if (status === 404) {
-        toast.error('Account not found! Please check email.');
-      } else {
-        toast.error(message);
-      }
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -111,7 +96,7 @@ export default function Login() {
   //==== || Navigate if already logged in || ==== //
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      // navigate('/');
     }
   }, [isAuthenticated]);
 
