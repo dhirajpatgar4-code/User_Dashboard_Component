@@ -34,6 +34,8 @@ import {
 import CounsellorSignup from './pages/counsellor-signup/CounsellorSignup';
 import CounsellorProfile from './pages/counsellor-Profile/CounsellorProfile.jsx';
 import CounsellorsGrid from './pages/Counsellor';
+
+import Spinner from './components/ui/Spinner.jsx';
 import UpdateProfilePage from './pages/UpdateProfilePage.jsx';
 
 // =================== Components =================== //
@@ -43,7 +45,6 @@ import { CaptureToken, DashboardNavBar, Navbar } from './components';
 import { useAuthStore } from './store/auth-store';
 import ProtectedRoute from './utils/ProtectedRoute.jsx';
 
-// ================================================= //
 
 const AppContent = () => {
   const location = useLocation();
