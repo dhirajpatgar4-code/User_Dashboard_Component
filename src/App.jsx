@@ -44,7 +44,7 @@ import { CaptureToken, DashboardNavBar, Navbar } from './components';
 // =================== Store =================== //
 import { useAuthStore } from './store/auth-store';
 import ProtectedRoute from './utils/ProtectedRoute.jsx';
-
+import UserDashboard from './pages/User-Dashboard/UserDashboard.jsx';
 
 const AppContent = () => {
   const location = useLocation();
@@ -84,7 +84,7 @@ const AppContent = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
 
         const user = res.data?.data;
@@ -123,7 +123,7 @@ const AppContent = () => {
         toastClassName={'toast-uppercase'}
       />
 
-      {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />}
+      {/* {isAuthenticated ? <DashboardNavBar /> : !hideNavbar && <Navbar />} */}
 
       <Routes>
         <Route path='/' element={<Home />} />
@@ -135,14 +135,18 @@ const AppContent = () => {
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/login' element={<Login />} />
         <Route path='/counsellor/signup' element={<CounsellorSignup />} />
+        <Route path='/user/dashboard' element={<UserDashboard />} />
 
         <Route element={<ProtectedRoute />}>
-        <Route path='/services' element={<Services />} />
-        <Route path='/logout' element={<Logout />} />
-        <Route path='/counsellor/profile/:email' element={<CounsellorProfile />} />
-        <Route path='/counsellor' element={<CounsellorsGrid />} />
-        <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
-        <Route path='/updateprofile' element={<UpdateProfilePage />} />
+          <Route path='/services' element={<Services />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route
+            path='/counsellor/profile/:email'
+            element={<CounsellorProfile />}
+          />
+          <Route path='/counsellor' element={<CounsellorsGrid />} />
+          <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
+          <Route path='/updateprofile' element={<UpdateProfilePage />} />
         </Route>
         <Route path='/verify-token' element={<CaptureToken />} />
       </Routes>
