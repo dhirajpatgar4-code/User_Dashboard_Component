@@ -9,7 +9,7 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-// 🔐 REQUEST INTERCEPTOR (IMPORTANT)
+// REQUEST INTERCEPTOR (IMPORTANT)
 api.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().secureToken;
@@ -23,7 +23,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// 🔁 RESPONSE INTERCEPTOR
+// RESPONSE INTERCEPTOR
 api.interceptors.response.use(
   (response) => response,
   (error) => {

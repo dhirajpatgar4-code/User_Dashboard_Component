@@ -142,9 +142,9 @@ const AppContent = () => {
         <Route path='/counsellor/profile/:email' element={<CounsellorProfile />} />
         <Route path='/counsellor' element={<CounsellorsGrid />} />
         <Route path='/razorpay-temporary' element={<RazorpayTemporary />} />
-        <Route path='/verify-token' element={<CaptureToken />} />
         <Route path='/updateprofile' element={<UpdateProfilePage />} />
         </Route>
+        <Route path='/verify-token' element={<CaptureToken />} />
       </Routes>
     </div>
   );
